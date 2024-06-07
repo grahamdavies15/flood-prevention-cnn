@@ -3,7 +3,6 @@ import pandas as pd
 
 
 def label_images(base_dir):
-    # Initialize an empty list to store the image information
     image_data = []
 
     # Traverse the base directory to find all site directories
