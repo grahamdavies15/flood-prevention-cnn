@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 
-
 def label_images(base_dir):
     image_data = []
 
@@ -20,19 +19,15 @@ def label_images(base_dir):
                     # Walk through the subdirectory
                     for root, _, files in os.walk(subdir_path):
                         for file in files:
-                            if file.lower().endswith(
-                                    ('png', 'jpg', 'jpeg', 'bmp', 'gif')):
+                            if file.lower().endswith(('png', 'jpg', 'jpeg', 'bmp', 'gif')):
                                 # Full file path
                                 file_path = os.path.join(root, file)
-
-                                # Extract location from the file path
-                                location = os.path.relpath(root, base_dir)
 
                                 # Append the data to the list
                                 image_data.append({
                                     'file_path': file_path,
-                                    'label': subdir,
-                                    'location': location
+                                    'site': site,
+                                    'label': subdir
                                 })
 
     # Create a DataFrame from the collected data
@@ -40,13 +35,12 @@ def label_images(base_dir):
 
     return df
 
-
 # Example usage
-base_dir = 'Data/blockagedetection_dataset/images'  # Replace with your actual base directory path
+base_dir = 'Data/blockagedetection_dataset/images'
 df_images = label_images(base_dir)
 
 # Get the count for each label
+site_counts = df_images['site'].value_counts()
 label_counts = df_images['label'].value_counts()
 
-# Print the summary
-print(label_counts)
+
