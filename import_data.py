@@ -104,24 +104,19 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 
-
 # Define top sites
-top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis', 'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree', 'sites_sheptonmallet_cam2', 'Cornwall_PenzanceCC']
+top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis',
+             'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree', 'sites_sheptonmallet_cam2',
+             'Cornwall_PenzanceCC']
 
-# Filter data for each season and top sites
-filtered_data = {
-    'Winter': winter_data[winter_data['site'].isin(top_sites)],
-    'Spring': spring_data[spring_data['site'].isin(top_sites)],
-    'Summer': summer_data[summer_data['site'].isin(top_sites)],
-    'Autumn': autumn_data[autumn_data['site'].isin(top_sites)]
-}
 
-balanced_data = []
+# Function to filter and balance data within each group
+def filter_and_balance(data, top_sites):
+    # Filter data for top sites
+    filtered_data = data[data['site'].isin(top_sites)]
 
-# Function to balance data within each group
-def balance_group(data):
     sampled_dfs = []
-    for site, group in data.groupby('site'):
+    for site, group in filtered_data.groupby('site'):
         blocked_df = group[group['label'] == 'blocked']
         clear_df = group[group['label'] == 'clear']
         if not blocked_df.empty and not clear_df.empty:
@@ -130,14 +125,27 @@ def balance_group(data):
             clear_sample = clear_df.sample(n=sample_size, random_state=1)
             sampled_df = pd.concat([blocked_sample, clear_sample])
             sampled_dfs.append(sampled_df)
-    return pd.concat(sampled_dfs).sample(frac=1, random_state=1).reset_index(drop=True)
 
-# Balance data for each season
-for season, data in filtered_data.items():
-    balanced_season = balance_group(data)
-    balanced_data.append(balanced_season)
+    if sampled_dfs:
+        balanced_data = pd.concat(sampled_dfs).sample(frac=1, random_state=1).reset_index(drop=True)
+    else:
+        balanced_data = pd.DataFrame()  # Return an empty DataFrame if no data is available
 
-# Combine balanced data from all seasons
-balanced_dataset = pd.concat(balanced_data).reset_index(drop=True)
+    return balanced_data
 
-print(balanced_dataset)
+
+# Apply the function to each season's data
+balanced_winter = filter_and_balance(winter_data, top_sites)
+balanced_spring = filter_and_balance(spring_data, top_sites)
+balanced_summer = filter_and_balance(summer_data, top_sites)
+balanced_autumn = filter_and_balance(autumn_data, top_sites)
+
+# Print results
+print("Balanced Winter Data:")
+print(balanced_winter)
+print("\nBalanced Spring Data:")
+print(balanced_spring)
+print("\nBalanced Summer Data:")
+print(balanced_summer)
+print("\nBalanced Autumn Data:")
+print(balanced_autumn)
