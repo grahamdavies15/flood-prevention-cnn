@@ -128,6 +128,12 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 # Train the model
 model = train_model(model, dataloaders, criterion, optimizer, num_epochs=25)
 
-# Save the model
-model_filepath = 'weights/winter_classifier.pth'
-torch.save(model.state_dict(), model_filepath)
+# Confirmation prompt before saving the model
+save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
+if save_model == 'yes':
+    # Save the model
+    model_filepath = 'weights/winter_classifier.pth'
+    torch.save(model.state_dict(), model_filepath)
+    print(f"Model saved to {model_filepath}")
+else:
+    print("Model not saved.")
