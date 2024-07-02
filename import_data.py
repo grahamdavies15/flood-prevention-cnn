@@ -1,6 +1,14 @@
 import os
 import pandas as pd
 
+# viewing images
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+
+from datetime import datetime
+
+
 def label_images(base_dir):
     image_data = []
 
@@ -39,8 +47,11 @@ def label_images(base_dir):
 base_dir = 'Data/blockagedetection_dataset/images'
 df_images = label_images(base_dir)
 
-# Get the count for each label
-site_counts = df_images['site'].value_counts()
-label_counts = df_images['label'].value_counts()
+# Filter out the 'other' label
+df_filtered = df_images[df_images['label'].isin(['blocked', 'clear'])]
 
+# Group by site and label, then count the images
+summary = df_filtered.groupby(['site', 'label']).size().unstack(fill_value=0)
 
+# Determine the minimum count between blocked and clear labels for each site
+summary['balanced'] = summary[['blocked', 'clear']].min(axis=1)
