@@ -35,7 +35,7 @@ class ScreenDataset(torch.utils.data.Dataset):
         return self.filenames[item], self.preprocess(img)
         
 if __name__ == "__main__":
-    model_filepath = '' # model filepath, eg: 'weights/classifier.pth'
+    model_filepath = 'weights/classifier.pth' # model filepath, eg: 'weights/classifier.pth'
     image_filenames = [] # list of image filepaths, eg ["images/Cornwall_Crinnis/clear/2022_01_28_15_07.jpg", "images/Cornwall_Crinnis/blocked/2022_02_08_16_08.jpg"]
     xmin = -1 # coordinates of the trash screen window (-1 if no window), eg 10
     xmax = -1 # 235
