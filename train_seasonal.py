@@ -7,7 +7,7 @@ from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
-from import_data import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
+from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
@@ -132,7 +132,7 @@ model = train_model(model, dataloaders, criterion, optimizer, num_epochs=25)
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'Data/blockagedetection_dataset/weights/winter_classifier.pth'
+    model_filepath = 'weights/winter_classifier.pth'
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:

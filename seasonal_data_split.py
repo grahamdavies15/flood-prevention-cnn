@@ -1,14 +1,8 @@
 import os
 import pandas as pd
-
-# viewing images
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-
-
 from datetime import datetime
-import import_data as id
-
 
 def label_images(base_dir):
     image_data = []
@@ -44,8 +38,9 @@ def label_images(base_dir):
 
     return df
 
-# Example usage
-base_dir = 'Data/blockagedetection_dataset/images'
+# Determine the base directory dynamically
+script_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.join(script_dir, 'Data/blockagedetection_dataset/images')
 df_images = label_images(base_dir)
 
 # Filter out the 'other' label
@@ -57,76 +52,16 @@ summary = df_filtered.groupby(['site', 'label']).size().unstack(fill_value=0)
 # Determine the minimum count between blocked and clear labels for each site
 summary['balanced'] = summary[['blocked', 'clear']].min(axis=1)
 
-# Collect balanced data for each site
-balanced_data = []
-for site in id.summary.index:
-    min_count = summary.loc[site, 'balanced']
-
-    blocked_images = df_filtered[(df_filtered['site'] == site) & (df_filtered['label'] == 'blocked')].sample(min_count)
-    clear_images = df_filtered[(df_filtered['site'] == site) & (df_filtered['label'] == 'clear')].sample(min_count)
-
-    balanced_data.append(blocked_images)
-    balanced_data.append(clear_images)
-
-# Concatenate the balanced data
-balanced_df = pd.concat(balanced_data)
-
-# Aggregate the counts for balanced images
-balanced_summary = balanced_df.groupby(['site', 'label']).size().unstack(fill_value=0)
-balanced_summary['total'] = balanced_summary['blocked'] + balanced_summary['clear']
-
-# Select the top three sites with the highest number of balanced images
-top_balanced_sites = balanced_summary.nlargest(7, 'total')  # chosen 7 as these each have 1000 images
-print(top_balanced_sites)
-
-
-###############
-
-
-# Select one image per site
-example_images = balanced_df[balanced_df['site'].isin(top_balanced_sites.index)].groupby('site').first().reset_index()
-
-# Get the total count
-example_images = example_images.merge(top_balanced_sites['total'], on='site')
-
-# Plot the images in a 4x2 grid
-fig, axes = plt.subplots(4, 2, figsize=(15, 15))
-
-for i, ax in enumerate(axes.flat):
-    if i < len(example_images) and i < 7:  # Ensure we only plot 7 images
-        img_path = example_images.iloc[i]['file_path']
-        img = mpimg.imread(img_path)
-        site = example_images.iloc[i]['site']
-        total = example_images.iloc[i]['total']
-        ax.imshow(img)
-        ax.set_title(f"{site} (Total: {total})")
-        ax.axis('off')
-    else:
-        ax.axis('off')
-
-plt.tight_layout()
-plt.show()
-
-
-
-
-##############
-
-
 # Extract the datetime string from the filenames by removing the extension
-df_images['datetime_str'] = df_images['file'].apply(lambda x: '_'.join(x.split('.')[0].split('_')[:5]))
+df_images['datetime_str'] = df_images['file_path'].apply(lambda x: '_'.join(os.path.basename(x).split('.')[0].split('_')[:5]))
 
 # Convert the datetime string to datetime objects
 df_images['date'] = pd.to_datetime(df_images['datetime_str'], format='%Y_%m_%d_%H_%M')
 
 # Print the results
-print(df_images[['file', 'datetime_str', 'date']])
+print(df_images[['file_path', 'datetime_str', 'date']])
 
 df_images.drop(columns=['datetime_str'], inplace=True)
-
-
-
-############
 
 def assign_season(date):
     year = date.year
@@ -153,45 +88,58 @@ spring_data = df_images[df_images['season'] == 'Spring']
 summer_data = df_images[df_images['season'] == 'Summer']
 autumn_data = df_images[df_images['season'] == 'Autumn']
 
+print(summary)
 
+# Plotting histogram
+plt.figure(figsize=(12, 6))
+df_images['date'].hist(bins=50, edgecolor='black')
+plt.xlabel('Date')
+plt.ylabel('Number of Images')
+plt.title('Histogram of Image Count by Date')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
 
-#################
+# Define top sites
+top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis',
+             'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree', 'sites_sheptonmallet_cam2',
+             'Cornwall_PenzanceCC']
 
-top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis', 'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree', 'sites_sheptonmallet_cam2', 'Cornwall_PenzanceCC']
+# Function to filter and balance data within each group
+def filter_and_balance(data, top_sites):
+    # Filter data for top sites
+    filtered_data = data[data['site'].isin(top_sites)]
 
-filtered_winter = winter_data[winter_data['site'].isin(top_sites)]
-filtered_spring = spring_data[spring_data['site'].isin(top_sites)]
-filtered_summer = summer_data[summer_data['site'].isin(top_sites)]
-filtered_autumn = autumn_data[autumn_data['site'].isin(top_sites)]
+    sampled_dfs = []
+    for site, group in filtered_data.groupby('site'):
+        blocked_df = group[group['label'] == 'blocked']
+        clear_df = group[group['label'] == 'clear']
+        if not blocked_df.empty and not clear_df.empty:
+            sample_size = min(len(blocked_df), len(clear_df))
+            blocked_sample = blocked_df.sample(n=sample_size, random_state=1)
+            clear_sample = clear_df.sample(n=sample_size, random_state=1)
+            sampled_df = pd.concat([blocked_sample, clear_sample])
+            sampled_dfs.append(sampled_df)
 
-print(filtered_winter.count())
-print(filtered_summer.count())
+    if sampled_dfs:
+        balanced_data = pd.concat(sampled_dfs).sample(frac=1, random_state=1).reset_index(drop=True)
+    else:
+        balanced_data = pd.DataFrame()  # Return an empty DataFrame if no data is available
 
-##########
+    return balanced_data
 
-sampled_dfs = []
-# Only winter done
-# Group by 'site' and sample within each group
-for site, group in filtered_winter.groupby('site'):
-    # Separate 'blocked' and 'clear' samples within each group
-    blocked_df = group[group['label'] == 'blocked']
-    clear_df = group[group['label'] == 'clear']
+# Apply the function to each season's data
+balanced_winter = filter_and_balance(winter_data, top_sites)
+balanced_spring = filter_and_balance(spring_data, top_sites)
+balanced_summer = filter_and_balance(summer_data, top_sites)
+balanced_autumn = filter_and_balance(autumn_data, top_sites)
 
-    # Ensure there are both 'blocked' and 'clear' samples in the group
-    if not blocked_df.empty and not clear_df.empty:
-        # Determine the sample size
-        sample_size = min(len(blocked_df), len(clear_df))
-
-        # Randomly sample without replacement
-        blocked_sample = blocked_df.sample(n=sample_size, random_state=1)
-        clear_sample = clear_df.sample(n=sample_size, random_state=1)
-
-        # Concatenate and append
-        sampled_df = pd.concat([blocked_sample, clear_sample])
-        sampled_dfs.append(sampled_df)
-
-# Concatenate and shuffle
-balanced_winter = pd.concat(sampled_dfs)
-balanced_winter = balanced_winter.sample(frac=1, random_state=1).reset_index(drop=True)
-
+# Print results
+print("Balanced Winter Data:")
 print(balanced_winter)
+print("\nBalanced Spring Data:")
+print(balanced_spring)
+print("\nBalanced Summer Data:")
+print(balanced_summer)
+print("\nBalanced Autumn Data:")
+print(balanced_autumn)
