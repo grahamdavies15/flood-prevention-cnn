@@ -45,12 +45,13 @@ if __name__ == "__main__":
     ymax = -1 # 235
     threshold = 0.5 # blockage threshold value (between 0 and 1)
 
-    batch_size = 10
+    batch_size = 32
     
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     
     dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    print(f"Using device: {device}")
 
     model = resnet50()
     num_ftrs = model.fc.in_features
@@ -66,4 +67,4 @@ if __name__ == "__main__":
         predictions = softmax(model(images)).detach()
         for i in range(len(filenames)):
             label = "blocked" if predictions[i, 1].item() > threshold else "clear"
-            print(f"{filenames[i]}: {label}")
+            print(f"{label[i]}: {label}")

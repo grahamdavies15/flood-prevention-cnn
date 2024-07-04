@@ -38,8 +38,9 @@ def label_images(base_dir):
 
     return df
 
-# Example usage
-base_dir = 'Data/blockagedetection_dataset/images'
+# Determine the base directory dynamically
+script_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.join(script_dir, 'Data/blockagedetection_dataset/images')
 df_images = label_images(base_dir)
 
 # Filter out the 'other' label
@@ -87,14 +88,9 @@ spring_data = df_images[df_images['season'] == 'Spring']
 summer_data = df_images[df_images['season'] == 'Summer']
 autumn_data = df_images[df_images['season'] == 'Autumn']
 
-
 print(summary)
 
-###
-import matplotlib.pyplot as plt
-
-# Assuming df_images is already defined and has a 'date' column
-# Create a histogram to show the count of images per date
+# Plotting histogram
 plt.figure(figsize=(12, 6))
 df_images['date'].hist(bins=50, edgecolor='black')
 plt.xlabel('Date')
@@ -108,7 +104,6 @@ plt.show()
 top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis',
              'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree', 'sites_sheptonmallet_cam2',
              'Cornwall_PenzanceCC']
-
 
 # Function to filter and balance data within each group
 def filter_and_balance(data, top_sites):
@@ -132,7 +127,6 @@ def filter_and_balance(data, top_sites):
         balanced_data = pd.DataFrame()  # Return an empty DataFrame if no data is available
 
     return balanced_data
-
 
 # Apply the function to each season's data
 balanced_winter = filter_and_balance(winter_data, top_sites)

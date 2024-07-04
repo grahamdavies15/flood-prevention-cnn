@@ -132,7 +132,7 @@ model = train_model(model, dataloaders, criterion, optimizer, num_epochs=25)
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/winter_classifier.pth'
+    model_filepath = 'Data/blockagedetection_dataset/weights/winter_classifier.pth'
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:
