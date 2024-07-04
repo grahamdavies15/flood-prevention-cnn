@@ -12,6 +12,8 @@ import os
 import time
 import copy
 
+from import_data import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
+
 class ScreenDataset(torch.utils.data.Dataset):
     def __init__(self, filenames, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
         self.preprocess = transforms.Compose([
@@ -35,8 +37,8 @@ class ScreenDataset(torch.utils.data.Dataset):
         return self.filenames[item], self.preprocess(img)
         
 if __name__ == "__main__":
-    model_filepath = 'weights/winter.pth' # model filepath, eg: 'weights/classifier.pth'
-    image_filenames = [] # list of image filepaths, eg ["images/Cornwall_Crinnis/clear/2022_01_28_15_07.jpg", "images/Cornwall_Crinnis/blocked/2022_02_08_16_08.jpg"]
+    model_filepath = 'weights/winter_classifier.pth' # model filepath, eg: 'weights/classifier.pth'
+    image_filenames = balanced_winter['file_path'].tolist() # list of image filepaths, eg ["images/Cornwall_Crinnis/clear/2022_01_28_15_07.jpg", "images/Cornwall_Crinnis/blocked/2022_02_08_16_08.jpg"]
     xmin = -1 # coordinates of the trash screen window (-1 if no window), eg 10
     xmax = -1 # 235
     ymin = -1 # 10

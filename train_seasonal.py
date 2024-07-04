@@ -36,7 +36,7 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 # Function to train the model
 def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25):
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print(f"Using device: {device}")
     model.to(device)
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -74,7 +74,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
                 running_corrects += torch.sum(preds == labels.data)
 
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
-            epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
+            epoch_acc = running_corrects.float() / len(dataloaders[phase].dataset)
 
             print(f'{phase} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}')
 
@@ -107,7 +107,7 @@ train_dataset = ScreenDataset(train_filenames, train_labels, xmin, xmax, ymin, y
 val_dataset = ScreenDataset(val_filenames, val_labels, xmin, xmax, ymin, ymax)
 
 # Create dataloaders
-batch_size = 16
+batch_size = 32
 dataloaders = {
     'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0),
     'val': torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
