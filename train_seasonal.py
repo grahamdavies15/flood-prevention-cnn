@@ -8,6 +8,8 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
+import matplotlib.pyplot as plt
+
 
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
@@ -34,13 +36,21 @@ class ScreenDataset(torch.utils.data.Dataset):
         label = self.labels[item]
         return self.preprocess(img), label
 
+
 # Function to train the model
-def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25):
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25, min_delta=0.01, patience=5):
+    device = torch.device("cuda" if torch.cuda.is_available() else
+                          ("mps" if torch.backends.mps.is_available() else "cpu"))
     print(f"Using device: {device}")
     model.to(device)
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
+    epochs_no_improve = 0
+
+    train_losses = []
+    train_accuracies = []
+    val_losses = []
+    val_accuracies = []
 
     for epoch in range(num_epochs):
         print(f'Epoch {epoch}/{num_epochs - 1}')
@@ -78,16 +88,31 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
 
             print(f'{phase} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}')
 
-            if phase == 'train' and scheduler:
-                scheduler.step()
+            if phase == 'train':
+                train_losses.append(epoch_loss)
+                train_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                if scheduler:
+                    scheduler.step()
+            else:
+                val_losses.append(epoch_loss)
+                val_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                # Early stopping
+                if epoch_acc - best_acc > min_delta:
+                    best_acc = epoch_acc
+                    best_model_wts = copy.deepcopy(model.state_dict())
+                    epochs_no_improve = 0
+                else:
+                    epochs_no_improve += 1
 
-            if phase == 'val' and epoch_acc > best_acc:
-                best_acc = epoch_acc
-                best_model_wts = copy.deepcopy(model.state_dict())
+                if epochs_no_improve == patience:
+                    print("Early stopping")
+                    model.load_state_dict(best_model_wts)
+                    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
 
     print(f'Best val Acc: {best_acc:.4f}')
     model.load_state_dict(best_model_wts)
-    return model
+    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
+
 
 # Choose the season to train on
 season_data = balanced_winter  # Change this to balanced_spring, balanced_summer, or balanced_autumn as needed
@@ -97,7 +122,8 @@ image_filenames = season_data['file_path'].tolist()
 labels = season_data['label'].apply(lambda x: 1 if x == 'blocked' else 0).tolist()
 
 # Split the dataset
-train_filenames, val_filenames, train_labels, val_labels = train_test_split(image_filenames, labels, test_size=0.2, random_state=42)
+train_filenames, val_filenames, train_labels, val_labels = train_test_split(image_filenames, labels, test_size=0.2,
+                                                                            random_state=42)
 
 # Coordinates for cropping (change if needed)
 xmin, xmax, ymin, ymax = -1, -1, -1, -1
@@ -126,7 +152,29 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Train the model
-model = train_model(model, dataloaders, criterion, optimizer, num_epochs=25)
+model, history = train_model(model, dataloaders, criterion, optimizer, num_epochs=25, min_delta=0.01, patience=5)
+
+# Plot training graph
+train_losses, val_losses, train_accuracies, val_accuracies = history
+
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.plot(train_losses, label='Training Loss')
+plt.plot(val_losses, label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(train_accuracies, label='Training Accuracy')
+plt.plot(val_accuracies, label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+
+plt.show()
 
 # Confirmation prompt before saving the model
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
