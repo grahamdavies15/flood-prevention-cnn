@@ -40,9 +40,28 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 
 if __name__ == "__main__":
-    model_filepath = 'weights/winter_classifier.pth'  # model filepath, eg: 'weights/classifier.pth'
-    image_filenames = balanced_spring[
-        'file_path'].tolist()  # list of image filepaths, eg ["images/Cornwall_Crinnis/clear/2022_01_28_15_07.jpg", "images/Cornwall_Crinnis/blocked/2022_02_08_16_08.jpg"]
+    # Select the season
+    season = "autumn"  # Change this to "winter", "spring", "summer", or "autumn"
+
+    model_filepath = 'weights/winter_classifier.pth'
+
+    # Set the dataset and model filepath based on the selected season
+    if season == "winter":
+        dataset = balanced_winter
+        #model_filepath = 'weights/winter_classifier.pth'
+    elif season == "spring":
+        dataset = balanced_spring
+        #model_filepath = 'weights/spring_classifier.pth'
+    elif season == "summer":
+        dataset = balanced_summer
+        #model_filepath = 'weights/summer_classifier.pth'
+    elif season == "autumn":
+        dataset = balanced_autumn
+        #model_filepath = 'weights/autumn_classifier.pth'
+    else:
+        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'summer', 'autumn'.")
+
+    image_filenames = dataset['file_path'].tolist()  # list of image filepaths
     xmin = -1  # coordinates of the trash screen window (-1 if no window), eg 10
     xmax = -1  # 235
     ymin = -1  # 10
@@ -53,8 +72,8 @@ if __name__ == "__main__":
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
-    dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    screen_dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
+    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=batch_size, shuffle=False)
     print(f"Using device: {device}")
 
     model = resnet50()
@@ -67,14 +86,14 @@ if __name__ == "__main__":
     softmax = nn.Softmax(dim=1)
 
     # has a 'pred' column
-    balanced_spring['pred'] = None
+    dataset['pred'] = None
 
     for filenames, images in dataloader:
         images = images.to(device)
         predictions = softmax(model(images)).detach()
         for i in range(len(filenames)):
             prediction = "blocked" if predictions[i, 1].item() > threshold else "clear"
-            balanced_spring.loc[balanced_spring['file_path'] == filenames[i], 'pred'] = prediction
+            dataset.loc[dataset['file_path'] == filenames[i], 'pred'] = prediction
 
     # Save dataframe with predictions and original labels
-    balanced_spring.to_csv('spring_predictions.csv', index=False)
+    dataset.to_csv(f'{season}_predictions.csv', index=False)
