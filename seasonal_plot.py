@@ -8,7 +8,7 @@ autumn_df = pd.read_csv('autumn_predictions.csv')
 spring_df = pd.read_csv('spring_predictions.csv')
 
 # Combine the data into a single DataFrame
-df = pd.concat([winter_df, autumn_df, spring_df])
+df = pd.concat([autumn_df, spring_df])
 
 # Calculate the accuracy for each season
 accuracy_df = df.groupby('season').apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(name='accuracy')
@@ -16,6 +16,11 @@ accuracy_df = df.groupby('season').apply(lambda x: (x['label'] == x['pred']).mea
 # Plot the accuracy comparison
 plt.figure(figsize=(10, 6))
 sns.barplot(data=accuracy_df, x='season', y='accuracy')
+
+# Add a red dashed line at 0.86 titled "Winter Validation"
+plt.axhline(0.86, color='red', linestyle='--', linewidth=2)
+plt.text(2.5, 0.87, 'Winter Validation', color='red', ha='center', va='bottom')
+
 plt.title('Prediction Accuracy by Season')
 plt.xlabel('Season')
 plt.ylabel('Accuracy')
