@@ -43,7 +43,7 @@ if __name__ == "__main__":
     # Select the season
     season = "autumn"  # Change this to "winter", "spring", "summer", or "autumn"
 
-    model_filepath = 'weights/winter_classifier.pth'
+    model_filepath = 'weights/spring_classifier.pth'
 
     # Set the dataset and model filepath based on the selected season
     if season == "winter":
