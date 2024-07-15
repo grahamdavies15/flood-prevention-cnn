@@ -41,7 +41,7 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 if __name__ == "__main__":
     # Select the season
-    season = "winter"  # Change this to "winter", "spring", "summer", or "autumn"
+    season = "spring"  # Change this to "winter", "spring", "summer", or "autumn"
     model_season = "autumn"
 
     model_filepath = f'weights/{model_season}_classifier.pth'
