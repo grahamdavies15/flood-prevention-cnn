@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the data
-winter_df = pd.read_csv('winter_predictions.csv')
-autumn_df = pd.read_csv('autumn_predictions.csv')
-spring_df = pd.read_csv('spring_predictions.csv')
+spring_df = pd.read_csv('autumn_pred_spring_model.csv')
+autumn_df = pd.read_csv('autumn_pred_autumn_model.csv')
 
 # Combine the data into a single DataFrame
+
+spring_df['season'] = 'autumn_s'
 df = pd.concat([autumn_df, spring_df])
 
 # Calculate the accuracy for each season
