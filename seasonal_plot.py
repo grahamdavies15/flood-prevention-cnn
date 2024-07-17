@@ -1,29 +1,41 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import glob
 
-# Load the data
-spring_df = pd.read_csv('autumn_pred_spring_model.csv')
-autumn_df = pd.read_csv('autumn_pred_autumn_model.csv')
+# File paths
+file_paths = glob.glob('csvs/*_pred_*.csv')
 
-# Combine the data into a single DataFrame
+# Create an empty list to hold dataframes
+dataframes = []
 
-spring_df['season'] = 'autumn_s'
-df = pd.concat([autumn_df, spring_df])
+# Load all CSV files and add a column to identify the model
+for file_path in file_paths:
+    df = pd.read_csv(file_path)
+    model = file_path.split('_')[0].split('/')[-1]
+    season = file_path.split('_')[2]
+    df['model'] = model
+    df['season'] = season
+    dataframes.append(df)
 
-# Calculate the accuracy for each season
-accuracy_df = df.groupby('season').apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(name='accuracy')
+# Combine all data into a single DataFrame
+df = pd.concat(dataframes)
+
+# Calculate the accuracy for each model and season
+accuracy_df = df.groupby(['model', 'season']).apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(name='accuracy')
 
 # Plot the accuracy comparison
-plt.figure(figsize=(10, 6))
-sns.barplot(data=accuracy_df, x='season', y='accuracy')
+plt.figure(figsize=(14, 8))
+sns.barplot(data=accuracy_df, x='season', y='accuracy', hue='model')
 
-# Add a red dashed line at 0.86 titled "Winter Validation"
-plt.axhline(0.86, color='red', linestyle='--', linewidth=2)
-plt.text(2.5, 0.87, 'Winter Validation', color='red', ha='center', va='bottom')
-
-plt.title('Prediction Accuracy by Season')
+# Add the title and labels
+plt.title('Prediction Accuracy by Season and Model')
 plt.xlabel('Season')
 plt.ylabel('Accuracy')
 plt.ylim(0, 1)  # Accuracy ranges from 0 to 1
+
+# Save the plot to a file
+plt.savefig('plots/accuracy_comparison_all_models.png')
+
+# Show the plot
 plt.show()
