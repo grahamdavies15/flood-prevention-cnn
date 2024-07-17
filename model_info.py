@@ -18,3 +18,19 @@ print(f"Optimizer State Dict: {optimizer_state_dict is not None}")
 print(f"Epoch: {epoch}")
 print(f"Training Accuracy: {train_accuracy}")
 print(f"Validation Accuracy: {val_accuracy}")
+
+import torch
+from torchvision.models import resnet50
+import torch.nn as nn
+
+def list_activation_functions(model):
+    for name, module in model.named_modules():
+        if isinstance(module, (nn.ReLU, nn.Sigmoid, nn.Tanh, nn.LeakyReLU, nn.Softmax, nn.Softplus)):
+            print(f"{name}: {type(module).__name__}")
+
+# Load the ResNet50 model
+model = resnet50()
+
+# List all activation functions in the model
+list_activation_functions(model)
+
