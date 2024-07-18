@@ -133,7 +133,7 @@ train_dataset = ScreenDataset(train_filenames, train_labels, xmin, xmax, ymin, y
 val_dataset = ScreenDataset(val_filenames, val_labels, xmin, xmax, ymin, ymax)
 
 # Create dataloaders
-batch_size = 32
+batch_size = 16
 dataloaders = {
     'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0),
     'val': torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
