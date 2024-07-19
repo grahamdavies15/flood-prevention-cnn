@@ -1,6 +1,5 @@
 import pandas as pd
 import torch
-import copy
 from PIL import Image
 from torchvision import transforms, models
 from torchvision.models import ResNet50_Weights
@@ -43,7 +42,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
                           ("mps" if torch.backends.mps.is_available() else "cpu"))
     print(f"Using device: {device}")
     model.to(device)
-    best_model_wts = copy.deepcopy(model.state_dict())
+    best_model_wts = None
     best_acc = 0.0
     epochs_no_improve = 0
 
@@ -99,18 +98,20 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
                 # Early stopping
                 if epoch_acc - best_acc > min_delta:
                     best_acc = epoch_acc
-                    best_model_wts = copy.deepcopy(model.state_dict())
+                    best_model_wts = model.state_dict()
                     epochs_no_improve = 0
                 else:
                     epochs_no_improve += 1
 
                 if epochs_no_improve == patience:
                     print("Early stopping")
-                    model.load_state_dict(best_model_wts)
+                    if best_model_wts is not None:
+                        model.load_state_dict(best_model_wts)
                     return model, (train_losses, val_losses, train_accuracies, val_accuracies)
 
     print(f'Best val Acc: {best_acc:.4f}')
-    model.load_state_dict(best_model_wts)
+    if best_model_wts is not None:
+        model.load_state_dict(best_model_wts)
     return model, (train_losses, val_losses, train_accuracies, val_accuracies)
 
 
