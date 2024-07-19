@@ -1,4 +1,6 @@
 import torch
+from torchvision.models import resnet50
+import torch.nn as nn
 
 # Load the checkpoint
 checkpoint = torch.load('weights/winter_classifier.pth')
@@ -18,9 +20,6 @@ print(f"Optimizer State Dict: {optimizer_state_dict is not None}")
 print(f"Epoch: {epoch}")
 print(f"Training Accuracy: {train_accuracy}")
 print(f"Validation Accuracy: {val_accuracy}")
-
-from torchvision.models import resnet50
-import torch.nn as nn
 
 def list_activation_functions(model):
     for name, module in model.named_modules():
