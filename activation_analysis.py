@@ -1,12 +1,9 @@
 import matplotlib.pyplot as plt
 import torch
-import numpy as np
 from PIL import Image
 from torchvision import transforms
 from torchvision.models import resnet50
 import torch.nn as nn
-import os
-import pandas as pd
 
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 
