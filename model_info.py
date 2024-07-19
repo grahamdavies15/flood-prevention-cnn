@@ -19,7 +19,6 @@ print(f"Epoch: {epoch}")
 print(f"Training Accuracy: {train_accuracy}")
 print(f"Validation Accuracy: {val_accuracy}")
 
-import torch
 from torchvision.models import resnet50
 import torch.nn as nn
 

@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 from datetime import datetime
 
 def label_images(base_dir):
