@@ -5,6 +5,7 @@ from torchvision import transforms
 from torchvision.models import resnet50
 import torch.nn as nn
 
+# Assume these functions are defined in 'seasonal_data_split.py'
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 
 
@@ -25,7 +26,7 @@ class ScreenDataset(torch.utils.data.Dataset):
         return len(self.filenames)
 
     def __getitem__(self, item):
-        img = Image.open(self.filenames[item])
+        img = Image.open(self.filenames[item]).convert("RGB")
         if self.xmin > 0 and self.xmax > 0 and self.ymin > 0 and self.ymax > 0:
             img = img.crop((self.xmin, self.ymin, self.xmax, self.ymax))
         return self.filenames[item], self.preprocess(img)
@@ -69,6 +70,8 @@ def compare_activations(models, image, layer_name):
             ax.axis('off')
 
     plt.tight_layout()
+    # Save the plot to a file
+    plt.savefig('plots/activation_functions.png')
     plt.show()
 
 
@@ -94,7 +97,6 @@ if __name__ == "__main__":
     xmax = -1  # 235
     ymin = -1  # 10
     ymax = -1  # 235
-    threshold = 0.5  # blockage threshold value (between 0 and 1)
 
     batch_size = 32
 
@@ -117,7 +119,7 @@ if __name__ == "__main__":
 
     # Visualize activations for a sample from the dataset
     sample_dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=1, shuffle=True, num_workers=0)
-    layer_name = 'layer4.0.conv1'  # Change this to the desired layer name
+    layer_name = 'layer1.0.conv1'
 
     # Get a single image to compare across models
     dataiter = iter(sample_dataloader)
