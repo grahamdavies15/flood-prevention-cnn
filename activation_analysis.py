@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
     # Visualize activations for a sample from the dataset
     sample_dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=1, shuffle=True, num_workers=0)
-    layer_name = 'layer1.0.conv1'
+    layer_name = 'layer4.0.conv1'
 
     # Get a single image to compare across models
     dataiter = iter(sample_dataloader)

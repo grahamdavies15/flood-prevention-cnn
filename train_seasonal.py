@@ -133,7 +133,7 @@ train_dataset = ScreenDataset(train_filenames, train_labels, xmin, xmax, ymin, y
 val_dataset = ScreenDataset(val_filenames, val_labels, xmin, xmax, ymin, ymax)
 
 # Create dataloaders
-batch_size = 16
+batch_size = 64
 dataloaders = {
     'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0),
     'val': torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
@@ -180,7 +180,7 @@ plt.show()
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/autumn_classifier.pth'
+    model_filepath = 'weights/autumn_classifier.pth' ### change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:
