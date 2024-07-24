@@ -105,12 +105,9 @@ top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_
              'Cornwall_PenzanceCC']
 
 # Function to filter and balance data within each group
-def filter_and_balance(data, top_sites):
-    # Filter data for top sites
-    filtered_data = data[data['site'].isin(top_sites)]
-
+def filter_and_balance(data):
     sampled_dfs = []
-    for site, group in filtered_data.groupby('site'):
+    for site, group in data.groupby('site'):
         blocked_df = group[group['label'] == 'blocked']
         clear_df = group[group['label'] == 'clear']
         if not blocked_df.empty and not clear_df.empty:
@@ -128,10 +125,10 @@ def filter_and_balance(data, top_sites):
     return balanced_data
 
 # Apply the function to each season's data
-balanced_winter = filter_and_balance(winter_data, top_sites)
-balanced_spring = filter_and_balance(spring_data, top_sites)
-balanced_summer = filter_and_balance(summer_data, top_sites)
-balanced_autumn = filter_and_balance(autumn_data, top_sites)
+balanced_winter = filter_and_balance(winter_data)
+balanced_spring = filter_and_balance(spring_data)
+balanced_summer = filter_and_balance(summer_data)
+balanced_autumn = filter_and_balance(autumn_data)
 
 # Print results
 print("Balanced Winter Data:")

@@ -115,7 +115,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
 
 
 # Choose the season to train on
-season_data = balanced_autumn  # Change this to balanced_spring, balanced_summer, or balanced_autumn as needed
+season_data = balanced_winter
 
 # Extract file paths and labels
 image_filenames = season_data['file_path'].tolist()
@@ -180,7 +180,7 @@ plt.show()
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/autumn_classifier.pth' ### change name for saving
+    model_filepath = 'weights/winter_classifier.pth' ### change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:
