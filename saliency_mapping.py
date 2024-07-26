@@ -6,7 +6,6 @@ from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
-from torchcam.utils import overlay_mask
 import os
 
 
@@ -51,12 +50,12 @@ def visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx, title=""
 
 
 # Function to process and visualize a single image
-def process_image(model, model_path, image_path, title=""):
+def process_image(model_path, image_path, title=""):
     # Load model
     model = load_model(model_path)
 
     # Initialize CAM extractor
-    cam_extractor = SmoothGradCAMpp(model, target_layer='layer4')
+    cam_extractor = SmoothGradCAMpp(model)
 
     # Preprocess image
     img_tensor = preprocess_image(image_path)
@@ -74,14 +73,14 @@ def process_image(model, model_path, image_path, title=""):
 
 # Define paths to models and example image
 models_paths = {
-    #"Autumn Model": 'weights/autumn_classifier.pth',
+    "Autumn Model": 'Data/blockagedetection_dataset/weights/classifier.pth',
     #"Spring Model": 'weights/spring_classifier.pth',
-    "Winter Model": 'weights/winter_classifier.pth'
+    #"Winter Model": 'weights/winter_classifier.pth'
 }
 
-example_image_path = 'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_15_50.jpg'
+example_image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
 
 # Process and visualize for each model
 for model_name, model_path in models_paths.items():
     print(f"Processing {model_name}...")
-    process_image(model_name, model_path, example_image_path, title=model_name)
+    process_image(model_path, example_image_path, title=model_name)

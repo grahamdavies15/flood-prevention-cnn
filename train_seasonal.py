@@ -1,4 +1,5 @@
 import torch
+import os
 from PIL import Image
 from torchvision import transforms, models
 from torchvision.models import ResNet50_Weights
@@ -7,7 +8,6 @@ import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 import matplotlib.pyplot as plt
-
 
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
@@ -28,7 +28,7 @@ class ScreenDataset(torch.utils.data.Dataset):
         return len(self.filenames)
 
     def __getitem__(self, item):
-        img = Image.open(self.filenames[item])
+        img = Image.open(self.filenames[item]).convert('RGB')
         if self.xmin > 0 and self.xmax > 0 and self.ymin > 0 and self.ymax > 0:
             img = img.crop((self.xmin, self.ymin, self.xmax, self.ymax))
         label = self.labels[item]
@@ -37,7 +37,7 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 # Function to train the model
 def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25, min_delta=0.01, patience=5):
-    device = torch.device("cuda" if torch.cuda.is_available() else
+    device = torch.device("cuda:2" if torch.cuda.is_available() else
                           ("mps" if torch.backends.mps.is_available() else "cpu"))
     print(f"Using device: {device}")
     model.to(device)
@@ -180,7 +180,7 @@ plt.show()
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/winter_classifier.pth' ### change name for saving
+    model_filepath = 'weights/winter_classifier.pth'  # Change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:
