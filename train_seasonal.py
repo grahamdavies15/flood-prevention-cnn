@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # did some
 
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
