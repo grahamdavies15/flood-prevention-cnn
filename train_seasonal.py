@@ -1,5 +1,4 @@
 import torch
-import os
 from PIL import Image
 from torchvision import transforms, models
 from torchvision.models import ResNet50_Weights
@@ -115,7 +114,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
 
 
 # Choose the season to train on
-season_data = balanced_winter
+season_data = balanced_spring
 
 # Extract file paths and labels
 image_filenames = season_data['file_path'].tolist()
@@ -180,7 +179,7 @@ plt.show()
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/winter_classifier.pth'  # Change name for saving
+    model_filepath = 'weights/spring_classifier.pth'  # Change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:
