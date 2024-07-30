@@ -32,8 +32,8 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 if __name__ == "__main__":
     # Select the season
-    season = "spring"  # Change this to "winter", "spring", "summer", or "autumn"
-    model_season = "autumn"
+    season = "autumn"  # Change this to "winter", "spring", "summer", or "autumn"
+    model_season = "spring"
 
     model_filepath = f'weights/{model_season}_classifier.pth'
 
@@ -84,4 +84,4 @@ if __name__ == "__main__":
             dataset.loc[dataset['file_path'] == filenames[i], 'pred'] = prediction
 
     # Save dataframe with predictions and original labels
-    dataset.to_csv(f'csvs/{season}_pred_{model_season}_model.csv', index=False)
+    dataset.to_csv(f'csvs/{season}_pred_{model_season}_model_full.csv', index=False)

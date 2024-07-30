@@ -4,7 +4,7 @@ import seaborn as sns
 import glob
 
 # File paths
-file_paths = glob.glob('csvs/*_pred_*.csv')
+file_paths = glob.glob('csvs/*_pred_*_full.csv')
 
 # Create an empty list to hold dataframes
 dataframes = []
