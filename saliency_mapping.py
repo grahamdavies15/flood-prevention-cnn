@@ -7,6 +7,9 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
 import os
+import random
+
+random.seed(55)
 
 # Define a function to load your model
 def load_model(model_path):
@@ -62,8 +65,9 @@ def process_image(model_path, image_path):
     # Visualize CAM
     return visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx)
 
+classifier = 'combined_season'
 # Path to model
-model_path = 'weights/autumn_classifier.pth'
+model_path = f'weights/{classifier}_classifier.pth'
 
 # Path to images
 image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
@@ -76,7 +80,7 @@ image_paths = image_paths[:9]
 
 # Create a 3x3 grid of images
 fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-fig.suptitle("Saliency Maps for Autumn Classifier", fontsize=16)
+fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
 
 # Process each image and display in the grid
 for idx, image_path in enumerate(image_paths):
@@ -89,5 +93,5 @@ for idx, image_path in enumerate(image_paths):
 plt.tight_layout()
 
 # Save the plot to a file
-plt.savefig('plots/saliency_autumn_classifier.png')
+plt.savefig(f'plots/saliency_{classifier}_classifier.png')
 plt.show()
