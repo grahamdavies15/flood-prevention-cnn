@@ -8,6 +8,10 @@ from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 import matplotlib.pyplot as plt # did some
 
+device = torch.device("cuda" if torch.cuda.is_available() else
+                          ("mps" if torch.backends.mps.is_available() else "cpu"))
+print(f"Using device: {device}")
+
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
     def __init__(self, filenames, labels, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
@@ -36,9 +40,6 @@ class ScreenDataset(torch.utils.data.Dataset):
 
 # Function to train the model
 def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25, min_delta=0.01, patience=5):
-    device = torch.device("cuda:2" if torch.cuda.is_available() else
-                          ("mps" if torch.backends.mps.is_available() else "cpu"))
-    print(f"Using device: {device}")
     model.to(device)
     best_model_wts = None
     best_acc = 0.0
