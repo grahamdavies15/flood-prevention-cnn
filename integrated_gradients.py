@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import random
+from captum.attr import IntegratedGradients, visualize_image_attr
 
 random.seed(55)
 
@@ -34,19 +35,17 @@ def preprocess_image(image_path):
         return None
 
 
-# Define a function to compute and visualize saliency map
-def visualize_saliency(model, img_tensor, img_pil, class_idx):
+# Define a function to compute and visualize Integrated Gradients
+def visualize_integrated_gradients(model, img_tensor, img_pil, class_idx):
+    ig = IntegratedGradients(model)
     img_tensor.requires_grad_()
 
-    output = model(img_tensor)
-    model.zero_grad()
-    output[0, class_idx].backward()
+    attr = ig.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
+    attr = attr.squeeze().detach()
+    attr, _ = torch.max(attr, dim=0)
 
-    saliency = img_tensor.grad.abs().squeeze().detach()
-    saliency, _ = torch.max(saliency, dim=0)
-
-    saliency_pil = transforms.functional.to_pil_image(saliency, mode='F')
-    return saliency_pil
+    attr_pil = transforms.functional.to_pil_image(attr.abs(), mode='F')
+    return attr_pil
 
 
 # Function to process and visualize a single image
@@ -64,10 +63,10 @@ def process_image(model_path, image_path):
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Visualize Saliency Map
-    saliency_map = visualize_saliency(model, img_tensor, img_pil, class_idx)
+    # Visualize Integrated Gradients
+    ig_map = visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
 
-    return Image.blend(img_pil, saliency_map, alpha=0.5)
+    return Image.blend(img_pil, ig_map, alpha=0.5)
 
 
 # Set paths and image processing parameters
@@ -81,7 +80,7 @@ image_paths = image_paths[:9]  # Ensure we only take the first 9 images
 
 # Create a 3x3 grid of images
 fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
+fig.suptitle(f"Integrated Gradients for {classifier} classifier", fontsize=16)
 
 # Process each image and display in the grid
 for idx, image_path in enumerate(image_paths):
@@ -92,5 +91,5 @@ for idx, image_path in enumerate(image_paths):
         ax.axis('off')
 
 plt.tight_layout()
-plt.savefig(f'plots/saliency_{classifier}_classifier.png')
+plt.savefig(f'plots/integrated_gradients_{classifier}_classifier.png')
 plt.show()
