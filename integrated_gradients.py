@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import random
-from captum.attr import IntegratedGradients, visualize_image_attr
+from captum.attr import IntegratedGradients  # Removed visualize_image_attr
 
 random.seed(55)
 
@@ -40,11 +40,14 @@ def visualize_integrated_gradients(model, img_tensor, img_pil, class_idx):
     ig = IntegratedGradients(model)
     img_tensor.requires_grad_()
 
+    # Compute integrated gradients
     attr = ig.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
     attr = attr.squeeze().detach()
     attr, _ = torch.max(attr, dim=0)
 
-    attr_pil = transforms.functional.to_pil_image(attr.abs(), mode='F')
+    # Normalize and convert the integrated gradients to a PIL image
+    attr = (attr - attr.min()) / (attr.max() - attr.min())  # Normalize to [0, 1]
+    attr_pil = transforms.functional.to_pil_image(attr.cpu())  # Convert to PIL image
     return attr_pil
 
 
@@ -66,6 +69,7 @@ def process_image(model_path, image_path):
     # Visualize Integrated Gradients
     ig_map = visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
 
+    # Overlay the integrated gradients on the original image
     return Image.blend(img_pil, ig_map, alpha=0.5)
 
 
