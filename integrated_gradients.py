@@ -1,17 +1,19 @@
 import torch
 from torchvision import models, transforms
+from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import random
 from captum.attr import IntegratedGradients
+import numpy as np
 
 random.seed(55)
 
 # Define a function to load your model
 def load_model(model_path):
-    model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+    model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
     model.load_state_dict(torch.load(model_path, map_location=torch.device('mps')))
@@ -32,30 +34,36 @@ def preprocess_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-# Define a function to apply Integrated Gradients and visualize
+# Define a function to compute integrated gradients and visualize
 def visualize_integrated_gradients(model, img_tensor, img_pil, class_idx):
     # Initialize Integrated Gradients
-    integrated_gradients = IntegratedGradients(model)
+    ig = IntegratedGradients(model)
 
-    # Compute attributions
-    attributions = integrated_gradients.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
+    # Compute the attributions using integrated gradients
+    attributions = ig.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
 
-    # Convert attributions to numpy and remove batch dimension
-    attributions = attributions.squeeze(0).permute(1, 2, 0).detach().numpy()
+    # Convert the attributions to a numpy array for visualization
+    attributions = attributions.squeeze().cpu().detach().numpy()
+    attributions = np.transpose(attributions, (1, 2, 0))  # HWC format
 
-    # Normalize attributions for visualization
-    attr_min, attr_max = attributions.min(), attributions.max()
-    attributions = (attributions - attr_min) / (attr_max - attr_min)
+    # Normalize the attributions for better visualization
+    attributions = (attributions - attributions.min()) / (attributions.max() - attributions.min())
 
-    # Convert attributions to PIL image for overlay
-    attributions_pil = Image.fromarray((attributions * 255).astype('uint8'))
+    # Plot the original image and the attributions
+    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
 
-    # Resize the original image to match the size of attributions
-    img_pil_resized = img_pil.resize(attributions_pil.size, Image.Resampling.LANCZOS)
+    # Original image
+    ax[0].imshow(img_pil)
+    ax[0].axis('off')
+    ax[0].set_title('Original Image')
 
-    # Overlay attributions on the resized original image
-    result = Image.blend(img_pil_resized, attributions_pil, alpha=0.5)
-    return result
+    # Integrated Gradients
+    ax[1].imshow(img_pil)
+    ax[1].imshow(attributions, cmap='hot', alpha=0.6)
+    ax[1].axis('off')
+    ax[1].set_title('Integrated Gradients')
+
+    plt.show()
 
 # Function to process and visualize a single image
 def process_image(model_path, image_path):
@@ -72,8 +80,8 @@ def process_image(model_path, image_path):
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Visualize Integrated Gradients
-    return visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
+    # Visualize integrated gradients
+    visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
 
 classifier = 'combined_season'
 # Path to model
@@ -88,20 +96,6 @@ image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folde
 # Ensure we only take the first 9 images
 image_paths = image_paths[:9]
 
-# Create a 3x3 grid of images
-fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-fig.suptitle(f"Integrated Gradients for {classifier} classifier", fontsize=16)
-
-# Process each image and display in the grid
+# Process each image and display in a loop
 for idx, image_path in enumerate(image_paths):
-    result = process_image(model_path, image_path)
-    if result is not None:
-        ax = axes[idx // 3, idx % 3]
-        ax.imshow(result)
-        ax.axis('off')
-
-plt.tight_layout()
-
-# Save the plot to a file
-plt.savefig(f'plots/integrated_gradients_{classifier}_classifier.png')
-plt.show()
+    process_image(model_path, image_path)
