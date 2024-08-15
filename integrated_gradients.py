@@ -5,10 +5,9 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import random
-from captum.attr import IntegratedGradients  # Removed visualize_image_attr
+from captum.attr import IntegratedGradients
 
 random.seed(55)
-
 
 # Define a function to load your model
 def load_model(model_path):
@@ -18,7 +17,6 @@ def load_model(model_path):
     model.load_state_dict(torch.load(model_path, map_location=torch.device('mps')))
     model.eval()
     return model
-
 
 # Define a function to preprocess images
 def preprocess_image(image_path):
@@ -34,22 +32,30 @@ def preprocess_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-
-# Define a function to compute and visualize Integrated Gradients
+# Define a function to apply Integrated Gradients and visualize
 def visualize_integrated_gradients(model, img_tensor, img_pil, class_idx):
-    ig = IntegratedGradients(model)
-    img_tensor.requires_grad_()
+    # Initialize Integrated Gradients
+    integrated_gradients = IntegratedGradients(model)
 
-    # Compute integrated gradients
-    attr = ig.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
-    attr = attr.squeeze().detach()
-    attr, _ = torch.max(attr, dim=0)
+    # Compute attributions
+    attributions = integrated_gradients.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
 
-    # Normalize and convert the integrated gradients to a PIL image
-    attr = (attr - attr.min()) / (attr.max() - attr.min())  # Normalize to [0, 1]
-    attr_pil = transforms.functional.to_pil_image(attr.cpu())  # Convert to PIL image
-    return attr_pil
+    # Convert attributions to numpy and remove batch dimension
+    attributions = attributions.squeeze(0).permute(1, 2, 0).detach().numpy()
 
+    # Normalize attributions for visualization
+    attr_min, attr_max = attributions.min(), attributions.max()
+    attributions = (attributions - attr_min) / (attr_max - attr_min)
+
+    # Convert attributions to PIL image for overlay
+    attributions_pil = Image.fromarray((attributions * 255).astype('uint8'))
+
+    # Resize the original image to match the size of attributions
+    img_pil_resized = img_pil.resize(attributions_pil.size, Image.Resampling.LANCZOS)
+
+    # Overlay attributions on the resized original image
+    result = Image.blend(img_pil_resized, attributions_pil, alpha=0.5)
+    return result
 
 # Function to process and visualize a single image
 def process_image(model_path, image_path):
@@ -67,20 +73,20 @@ def process_image(model_path, image_path):
     class_idx = torch.argmax(output).item()
 
     # Visualize Integrated Gradients
-    ig_map = visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
+    return visualize_integrated_gradients(model, img_tensor, img_pil, class_idx)
 
-    # Overlay the integrated gradients on the original image
-    return Image.blend(img_pil, ig_map, alpha=0.5)
-
-
-# Set paths and image processing parameters
 classifier = 'combined_season'
+# Path to model
 model_path = f'weights/{classifier}_classifier.pth'
+
+# Path to images
 image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
 
 # Get a list of image paths
 image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
-image_paths = image_paths[:9]  # Ensure we only take the first 9 images
+
+# Ensure we only take the first 9 images
+image_paths = image_paths[:9]
 
 # Create a 3x3 grid of images
 fig, axes = plt.subplots(3, 3, figsize=(15, 15))
@@ -95,5 +101,7 @@ for idx, image_path in enumerate(image_paths):
         ax.axis('off')
 
 plt.tight_layout()
+
+# Save the plot to a file
 plt.savefig(f'plots/integrated_gradients_{classifier}_classifier.png')
 plt.show()
