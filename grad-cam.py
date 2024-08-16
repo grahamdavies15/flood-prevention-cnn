@@ -11,16 +11,15 @@ import random
 
 random.seed(55)
 
-# Define a function to load your model
-def load_model(model_path):
+def load_model(model_path, device):
     model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('mps')))
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.to(device)
     model.eval()
     return model
 
-# Define a function to preprocess images
 def preprocess_image(image_path):
     preprocess = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -34,7 +33,6 @@ def preprocess_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-# Define a function to apply CAM and visualize
 def visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx):
     activation_maps = cam_extractor(class_idx, model(img_tensor))
 
@@ -44,54 +42,42 @@ def visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx):
         result = overlay_mask(img_pil, activation_map_pil, alpha=0.5)
         return result
 
-# Function to process and visualize a single image
-def process_image(model_path, image_path):
-    # Load model
-    model = load_model(model_path)
+def process_image(model_path, image_path, device):
+    model = load_model(model_path, device)
 
-    # Initialize CAM extractor
     cam_extractor = SmoothGradCAMpp(model)
 
-    # Preprocess image
     img_tensor = preprocess_image(image_path)
     if img_tensor is None:
-        return None  # Skip if there was an error loading the image
+        return None
+    img_tensor = img_tensor.to(device)
     img_pil = Image.open(image_path).convert('RGB')
 
-    # Get class prediction
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Visualize CAM
     return visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx)
 
-classifier = 'combined_season'
-# Path to model
-model_path = f'weights/{classifier}_classifier.pth'
+if __name__ == "__main__":
+    device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
-# Path to images
-image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
+    classifier = 'combined_season'
+    model_path = f'weights/{classifier}_classifier.pth'
+    image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
 
-# Get a list of image paths
-image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
+    image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
+    image_paths = image_paths[:9]
 
-# Ensure we only take the first 9 images
-image_paths = image_paths[:9]
+    fig, axes = plt.subplots(3, 3, figsize=(15, 15))
+    fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
 
-# Create a 3x3 grid of images
-fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
+    for idx, image_path in enumerate(image_paths):
+        result = process_image(model_path, image_path, device)
+        if result is not None:
+            ax = axes[idx // 3, idx % 3]
+            ax.imshow(result)
+            ax.axis('off')
 
-# Process each image and display in the grid
-for idx, image_path in enumerate(image_paths):
-    result = process_image(model_path, image_path)
-    if result is not None:
-        ax = axes[idx // 3, idx % 3]
-        ax.imshow(result)
-        ax.axis('off')
-
-plt.tight_layout()
-
-# Save the plot to a file
-plt.savefig(f'plots/saliency_{classifier}_classifier.png')
-plt.show()
+    plt.tight_layout()
+    plt.savefig(f'plots/saliency_{classifier}_classifier.png')
+    plt.show()

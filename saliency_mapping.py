@@ -1,23 +1,26 @@
 import torch
 from torchvision import models, transforms
-from torchcam.utils import overlay_mask
 from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
+import numpy as np
 import os
 import random
 
 random.seed(55)
 
+
 # Define a function to load your model
-def load_model(model_path):
+def load_model(model_path, device):
     model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('mps')))
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.to(device)
     model.eval()
     return model
+
 
 # Define a function to preprocess images
 def preprocess_image(image_path):
@@ -33,75 +36,77 @@ def preprocess_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-# Define a function to create a saliency map and visualize
-def visualize_saliency(model, img_tensor, img_pil, class_idx):
-    # Make sure the model is in evaluation mode and gradients are enabled
-    model.eval()
+
+# Define a function to generate saliency maps
+def generate_saliency_map(model, img_tensor, class_idx):
+    # Set requires_grad to True to compute gradients
     img_tensor.requires_grad = True
 
     # Forward pass
     output = model(img_tensor)
-    output = output[0, class_idx]
 
-    # Backward pass to get gradients
-    output.backward()
+    # Zero the gradients of the output
+    model.zero_grad()
 
-    # Get the gradient of the input image
+    # Backward pass to get the gradient of the output with respect to the input image
+    output[0, class_idx].backward()
+
+    # Get the gradients of the image
     saliency, _ = torch.max(img_tensor.grad.data.abs(), dim=1)
-    saliency = saliency.squeeze().cpu()
 
-    # Convert to PIL image for visualization
-    saliency_pil = transforms.functional.to_pil_image(saliency, mode='F')
+    # Normalize the saliency map to [0, 1]
+    saliency = (saliency - saliency.min()) / (saliency.max() - saliency.min())
 
-    # Overlay the saliency map on the original image
-    result = overlay_mask(img_pil, saliency_pil, alpha=0.5)
-    return result
+    return saliency.squeeze().cpu().numpy()
+
 
 # Function to process and visualize a single image
-def process_image(model_path, image_path):
+def process_image(model_path, image_path, device):
     # Load model
-    model = load_model(model_path)
+    model = load_model(model_path, device)
 
     # Preprocess image
     img_tensor = preprocess_image(image_path)
     if img_tensor is None:
-        return None  # Skip if there was an error loading the image
+        return None, None
+    img_tensor = img_tensor.to(device)
     img_pil = Image.open(image_path).convert('RGB')
 
     # Get class prediction
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Visualize saliency map
-    return visualize_saliency(model, img_tensor, img_pil, class_idx)
+    # Generate saliency map
+    saliency_map = generate_saliency_map(model, img_tensor, class_idx)
 
-classifier = 'combined_season'
-# Path to model
-model_path = f'weights/{classifier}_classifier.pth'
+    return saliency_map, img_pil
 
-# Path to images
-image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
 
-# Get a list of image paths
-image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
+if __name__ == "__main__":
+    device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
-# Ensure we only take the first 9 images
-image_paths = image_paths[:9]
+    classifier = 'combined_season'
+    model_path = f'weights/{classifier}_classifier.pth'
+    image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
 
-# Create a 3x3 grid of images
-fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
+    image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
+    image_paths = image_paths[:9]
 
-# Process each image and display in the grid
-for idx, image_path in enumerate(image_paths):
-    result = process_image(model_path, image_path)
-    if result is not None:
-        ax = axes[idx // 3, idx % 3]
-        ax.imshow(result)
-        ax.axis('off')
+    fig, axes = plt.subplots(3, 3, figsize=(15, 15))
+    fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
 
-plt.tight_layout()
+    for idx, image_path in enumerate(image_paths):
+        saliency_map, img_pil = process_image(model_path, image_path, device)
+        if saliency_map is not None:
+            # Resize the saliency map to the size of the original image
+            saliency_map_resized = Image.fromarray(np.uint8(saliency_map * 255)).resize(img_pil.size,
+                                                                                        resample=Image.BILINEAR)
 
-# Save the plot to a file
-plt.savefig(f'plots/saliency_{classifier}_classifier.png')
-plt.show()
+            ax = axes[idx // 3, idx % 3]
+            ax.imshow(img_pil, alpha=0.6)
+            ax.imshow(saliency_map_resized, cmap='hot', alpha=0.4)
+            ax.axis('off')
+
+    plt.tight_layout()
+    plt.savefig(f'plots/saliency_{classifier}_classifier.png')
+    plt.show()
