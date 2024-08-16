@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import numpy as np
-from captum.attr import IntegratedGradients
+from captum.attr import Occlusion
 
 # Define a function to load your model
 def load_model(model_path):
@@ -31,10 +31,10 @@ def preprocess_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-# Function to compute and visualize Integrated Gradients
-def integrated_gradients(model, img_tensor, class_idx):
-    ig = IntegratedGradients(model)
-    attributions = ig.attribute(img_tensor, target=class_idx, baselines=img_tensor * 0)
+# Function to compute and visualize Occlusion
+def occlusion(model, img_tensor, class_idx):
+    occlusion = Occlusion(model)
+    attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 15))
     return attributions
 
 # Function to visualize the attributions
@@ -75,11 +75,11 @@ def process_image(model_path, image_path):
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Integrated Gradients
-    ig_attributions = integrated_gradients(model, img_tensor, class_idx)
-    visualize_attributions(ig_attributions, img_pil, 'Integrated Gradients')
+    # Occlusion
+    occlusion_attributions = occlusion(model, img_tensor, class_idx)
+    visualize_attributions(occlusion_attributions, img_pil, 'Occlusion')
 
-# Main script to run integrated gradients on a set of images
+# Main script to run occlusion on a set of images
 if __name__ == "__main__":
     classifier = 'combined_season'
     model_path = f'weights/{classifier}_classifier.pth'
