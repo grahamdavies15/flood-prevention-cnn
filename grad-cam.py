@@ -61,23 +61,22 @@ def process_image(model_path, image_path, device):
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
-    classifier = 'combined_season'
-    model_path = f'weights/{classifier}_classifier.pth'
-    image_folder = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked'
+    seasons = ['winter', 'spring', 'autumn']
+    model_paths = {season: f'weights/{season}_classifier.pth' for season in seasons}
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
 
-    image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
-    image_paths = image_paths[:9]
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    fig.suptitle("Saliency Maps for Different Season Classifiers", fontsize=16)
 
-    fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-    fig.suptitle(f"Saliency Maps for {classifier} classifier", fontsize=16)
-
-    for idx, image_path in enumerate(image_paths):
+    for idx, season in enumerate(seasons):
+        model_path = model_paths[season]
         result = process_image(model_path, image_path, device)
         if result is not None:
-            ax = axes[idx // 3, idx % 3]
+            ax = axes[idx]
             ax.imshow(result)
+            ax.set_title(f"{season.capitalize()}")
             ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig(f'plots/saliency_{classifier}_classifier.png')
+    plt.savefig(f'plots/saliency_season_classifiers.png')
     plt.show()

@@ -32,60 +32,59 @@ def preprocess_image(image_path):
         return None
 
 # Function to compute and visualize Occlusion
-def occlusion(model, img_tensor, class_idx):
+def compute_occlusion(model, img_tensor, class_idx):
     occlusion = Occlusion(model)
     attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 15))
     return attributions
 
-# Function to visualize the attributions
-def visualize_attributions(attributions, img_pil, method_name):
-    img_pil_resized = img_pil.resize((224, 224))
-
-    attributions = attributions.squeeze().cpu().detach().numpy()
-    attributions = np.transpose(attributions, (1, 2, 0))
-
-    # Summing across channels
-    attributions = np.sum(attributions, axis=2)
-
-    # Clipping outliers
-    attributions = np.clip(attributions, 0, np.percentile(attributions, 99))
-
-    # Normalizing the attributions
-    attributions = (attributions - attributions.min()) / (attributions.max() - attributions.min())
-
-    plt.figure(figsize=(8, 8))
-    plt.imshow(img_pil_resized)
-
-    # Overlaying the attributions with the extent set to cover the whole resized image
-    height, width = img_pil_resized.size
-    plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
-
-    plt.title(f'{method_name}')
-    plt.axis('off')
-    plt.show()
-
-# Function to process and visualize a single image
+# Function to process and return attributions
 def process_image(model_path, image_path):
     model = load_model(model_path)
     img_tensor = preprocess_image(image_path)
     if img_tensor is None:
-        return None
+        return None, None
     img_pil = Image.open(image_path).convert('RGB')
 
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Occlusion
-    occlusion_attributions = occlusion(model, img_tensor, class_idx)
-    visualize_attributions(occlusion_attributions, img_pil, 'Occlusion')
+    # Compute Occlusion
+    occlusion_attributions = compute_occlusion(model, img_tensor, class_idx)
+    return occlusion_attributions, img_pil
 
-# Main script to run occlusion on a set of images
+# Function to visualize all models' attributions in a 3x1 grid
+def visualize_models(image_path, model_paths, model_names):
+    attributions_list = []
+    img_pil = None
+
+    for model_path in model_paths:
+        attributions, img_pil = process_image(model_path, image_path)
+        if attributions is not None:
+            attributions = attributions.squeeze().cpu().detach().numpy()
+            attributions = np.transpose(attributions, (1, 2, 0))
+            attributions = np.sum(attributions, axis=2)
+            attributions = np.clip(attributions, 0, np.percentile(attributions, 99))
+            attributions = (attributions - attributions.min()) / (attributions.max() - attributions.min())
+            attributions_list.append(attributions)
+
+    if img_pil is not None and len(attributions_list) == 3:
+        img_pil_resized = img_pil.resize((224, 224))
+        plt.figure(figsize=(15, 5))
+
+        for i, (attributions, model_name) in enumerate(zip(attributions_list, model_names)):
+            plt.subplot(1, 3, i+1)
+            plt.imshow(img_pil_resized)
+            height, width = img_pil_resized.size
+            plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
+            plt.title(f'{model_name}')
+            plt.axis('off')
+
+        plt.show()
+
+# Main script to run occlusion on a single image for three models
 if __name__ == "__main__":
-    classifier = 'combined_season'
-    model_path = f'weights/{classifier}_classifier.pth'
-    image_folder = 'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked'
-    image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith('.jpg')]
-    image_paths = image_paths[:9]
+    model_names = ['winter', 'spring', 'autumn']
+    model_paths = [f'weights/{name}_classifier.pth' for name in model_names]
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
 
-    for image_path in image_paths:
-        process_image(model_path, image_path)
+    visualize_models(image_path, model_paths, model_names)
