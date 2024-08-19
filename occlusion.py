@@ -40,7 +40,7 @@ def process_image(model_path, image_path, device):
     if img_tensor is None:
         return None, None
     img_tensor = img_tensor.to(device)
-    img_pil = Image.open(image_path).convert('RGB')
+    img_pil = Image.open(image_path).convert('RGB').resize((224, 224))
 
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
@@ -75,7 +75,7 @@ def visualize_models(image_path, model_paths, model_names, device):
             plt.title(f'{model_name}')
             plt.axis('off')
 
-        plt.tight_layout()
+        plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
         plt.savefig('plots/occlusion_comparison.png')
         plt.show()
 

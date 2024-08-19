@@ -43,7 +43,7 @@ def process_image(model_path, image_path, device):
     if img_tensor is None:
         return None, None
     img_tensor = img_tensor.to(device)
-    img_pil = Image.open(image_path).convert('RGB')
+    img_pil = Image.open(image_path).convert('RGB').resize((224, 224))
 
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
@@ -62,13 +62,13 @@ if __name__ == "__main__":
     for idx, model_path in enumerate(model_paths):
         saliency_map, img_pil = process_image(model_path, image_path, device)
         if saliency_map is not None:
-            saliency_map_resized = Image.fromarray(np.uint8(saliency_map * 255)).resize(img_pil.size, resample=Image.BILINEAR)
+            saliency_map_resized = Image.fromarray(np.uint8(saliency_map * 255)).resize((224, 224), resample=Image.BILINEAR)
             ax = axes[idx]
             ax.imshow(img_pil, alpha=0.6)
             ax.imshow(saliency_map_resized, cmap='hot', alpha=0.4)
             ax.set_title(f'{classifiers[idx]} model')
             ax.axis('off')
 
-    plt.tight_layout()
+    plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
     plt.savefig(f'plots/saliency_comparison.png')
     plt.show()

@@ -6,10 +6,6 @@ from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
-import os
-import random
-
-random.seed(55)
 
 def load_model(model_path, device):
     model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
@@ -51,7 +47,7 @@ def process_image(model_path, image_path, device):
     if img_tensor is None:
         return None
     img_tensor = img_tensor.to(device)
-    img_pil = Image.open(image_path).convert('RGB')
+    img_pil = Image.open(image_path).convert('RGB').resize((224, 224))
 
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
@@ -76,6 +72,6 @@ if __name__ == "__main__":
             ax.set_title(f"{season.capitalize()}")
             ax.axis('off')
 
-    plt.tight_layout()
+    plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
     plt.savefig(f'plots/smoothgradcam_comparison.png')
     plt.show()
