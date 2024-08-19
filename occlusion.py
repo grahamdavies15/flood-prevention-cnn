@@ -4,20 +4,18 @@ from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
-import os
 import numpy as np
 from captum.attr import Occlusion
 
-# Define a function to load your model
-def load_model(model_path):
+def load_model(model_path, device):
     model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('mps')))
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.to(device)
     model.eval()
     return model
 
-# Function to preprocess images
 def preprocess_image(image_path):
     preprocess = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -26,39 +24,36 @@ def preprocess_image(image_path):
     ])
     try:
         img = Image.open(image_path).convert('RGB')
-        return preprocess(img).unsqueeze(0)  # Add batch dimension
+        return preprocess(img).unsqueeze(0)
     except Exception as e:
         print(f"Error loading image {image_path}: {e}")
         return None
 
-# Function to compute and visualize Occlusion
 def compute_occlusion(model, img_tensor, class_idx):
     occlusion = Occlusion(model)
     attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 15))
     return attributions
 
-# Function to process and return attributions
-def process_image(model_path, image_path):
-    model = load_model(model_path)
+def process_image(model_path, image_path, device):
+    model = load_model(model_path, device)
     img_tensor = preprocess_image(image_path)
     if img_tensor is None:
         return None, None
+    img_tensor = img_tensor.to(device)
     img_pil = Image.open(image_path).convert('RGB')
 
     output = model(img_tensor)
     class_idx = torch.argmax(output).item()
 
-    # Compute Occlusion
     occlusion_attributions = compute_occlusion(model, img_tensor, class_idx)
     return occlusion_attributions, img_pil
 
-# Function to visualize all models' attributions in a 3x1 grid
-def visualize_models(image_path, model_paths, model_names):
+def visualize_models(image_path, model_paths, model_names, device):
     attributions_list = []
     img_pil = None
 
     for model_path in model_paths:
-        attributions, img_pil = process_image(model_path, image_path)
+        attributions, img_pil = process_image(model_path, image_path, device)
         if attributions is not None:
             attributions = attributions.squeeze().cpu().detach().numpy()
             attributions = np.transpose(attributions, (1, 2, 0))
@@ -79,12 +74,14 @@ def visualize_models(image_path, model_paths, model_names):
             plt.title(f'{model_name}')
             plt.axis('off')
 
+        plt.tight_layout()
+        plt.savefig(f'plots/occlusion_comparison.png')
         plt.show()
 
-# Main script to run occlusion on a single image for three models
 if __name__ == "__main__":
+    device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     model_names = ['winter', 'spring', 'autumn']
     model_paths = [f'weights/{name}_classifier.pth' for name in model_names]
     image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
 
-    visualize_models(image_path, model_paths, model_names)
+    visualize_models(image_path, model_paths, model_names, device)

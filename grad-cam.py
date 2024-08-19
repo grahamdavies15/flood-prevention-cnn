@@ -28,7 +28,7 @@ def preprocess_image(image_path):
     ])
     try:
         img = Image.open(image_path).convert('RGB')
-        return preprocess(img).unsqueeze(0)  # Add batch dimension
+        return preprocess(img).unsqueeze(0)
     except Exception as e:
         print(f"Error loading image {image_path}: {e}")
         return None
@@ -37,8 +37,8 @@ def visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx):
     activation_maps = cam_extractor(class_idx, model(img_tensor))
 
     for activation_map in activation_maps:
-        activation_map = activation_map.squeeze(0)  # Remove batch dimension
-        activation_map_pil = transforms.functional.to_pil_image(activation_map, mode='F')  # Convert to PIL image
+        activation_map = activation_map.squeeze(0)
+        activation_map_pil = transforms.functional.to_pil_image(activation_map, mode='F')
         result = overlay_mask(img_pil, activation_map_pil, alpha=0.5)
         return result
 
