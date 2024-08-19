@@ -64,24 +64,25 @@ def visualize_models(image_path, model_paths, model_names, device):
 
     if img_pil is not None and len(attributions_list) == 3:
         img_pil_resized = img_pil.resize((224, 224))
+        width, height = img_pil_resized.size
+
         plt.figure(figsize=(15, 5))
 
         for i, (attributions, model_name) in enumerate(zip(attributions_list, model_names)):
             plt.subplot(1, 3, i+1)
             plt.imshow(img_pil_resized)
-            height, width = img_pil_resized.size
             plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
             plt.title(f'{model_name}')
             plt.axis('off')
 
         plt.tight_layout()
-        plt.savefig(f'plots/occlusion_comparison.png')
+        plt.savefig('plots/occlusion_comparison.png')
         plt.show()
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     model_names = ['winter', 'spring', 'autumn']
     model_paths = [f'weights/{name}_classifier.pth' for name in model_names]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
 
     visualize_models(image_path, model_paths, model_names, device)

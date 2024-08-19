@@ -63,10 +63,9 @@ if __name__ == "__main__":
 
     seasons = ['winter', 'spring', 'autumn']
     model_paths = {season: f'weights/{season}_classifier.pth' for season in seasons}
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    fig.suptitle("Saliency Maps for Different Season Classifiers", fontsize=16)
 
     for idx, season in enumerate(seasons):
         model_path = model_paths[season]
@@ -78,5 +77,5 @@ if __name__ == "__main__":
             ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig(f'plots/saliency_season_classifiers.png')
+    plt.savefig(f'plots/smoothgradcam_comparison.png')
     plt.show()

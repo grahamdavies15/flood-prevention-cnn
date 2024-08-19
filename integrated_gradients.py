@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # List of model paths
     classifiers = ['winter', 'spring', 'autumn']
     model_paths = [f'weights/{classifier}_classifier.pth' for classifier in classifiers]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
 
     # Setup the 3x1 grid
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))  # 3x1 grid

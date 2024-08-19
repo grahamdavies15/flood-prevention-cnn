@@ -55,7 +55,7 @@ if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     classifiers = ['winter', 'spring', 'autumn']
     model_paths = [f'weights/{classifier}_classifier.pth' for classifier in classifiers]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_01_09_59.jpg'
+    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
