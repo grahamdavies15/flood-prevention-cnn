@@ -57,21 +57,25 @@ def process_image(model_path, image_path, device):
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
-    seasons = ['winter', 'spring', 'autumn']
-    model_paths = {season: f'weights/{season}_classifier.pth' for season in seasons}
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
+    # Define the seasons and corresponding model paths
+    classifier = 'autumn'  # Single classifier to be used
+    model_path = f'weights/{classifier}_classifier.pth'
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    # List of different image paths
+    image_paths = [
+        'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
+    ]
 
-    for idx, season in enumerate(seasons):
-        model_path = model_paths[season]
+    # Process each image and save the result individually
+    for idx, image_path in enumerate(image_paths):
         result = process_image(model_path, image_path, device)
         if result is not None:
-            ax = axes[idx]
-            ax.imshow(result)
-            ax.set_title(f"{season.capitalize()}")
-            ax.axis('off')
+            plt.figure(figsize=(5, 5))
+            plt.imshow(result)
+            #plt.title(f"Image {idx + 1} - {classifier.capitalize()}")
+            plt.axis('off')
 
-    plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
-    plt.savefig(f'plots/smoothgradcam_comparison.png')
-    plt.show()
+            plt.savefig(f'plots/gradcam_{classifier}_{idx + 1}.png')
+            plt.show()
