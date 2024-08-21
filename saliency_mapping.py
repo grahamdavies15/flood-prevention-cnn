@@ -37,8 +37,7 @@ def generate_saliency_map(model, img_tensor, class_idx):
     saliency = (saliency - saliency.min()) / (saliency.max() - saliency.min())
     return saliency.squeeze().cpu().numpy()
 
-def process_image(model_path, image_path, device):
-    model = load_model(model_path, device)
+def process_image(model, image_path, device):
     img_tensor = preprocess_image(image_path)
     if img_tensor is None:
         return None, None
@@ -53,22 +52,27 @@ def process_image(model_path, image_path, device):
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifiers = ['winter', 'spring', 'autumn']
-    model_paths = [f'weights/{classifier}_classifier.pth' for classifier in classifiers]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
+    classifier = 'autumn'  # Use a single classifier
+    model_path = f'weights/{classifier}_classifier.pth'
+    image_paths = [
+        'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
+    ]
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    # Load the model once
+    model = load_model(model_path, device)
 
-    for idx, model_path in enumerate(model_paths):
-        saliency_map, img_pil = process_image(model_path, image_path, device)
+    for idx, image_path in enumerate(image_paths):
+        saliency_map, img_pil = process_image(model, image_path, device)
         if saliency_map is not None:
             saliency_map_resized = Image.fromarray(np.uint8(saliency_map * 255)).resize((224, 224), resample=Image.BILINEAR)
-            ax = axes[idx]
-            ax.imshow(img_pil, alpha=0.6)
-            ax.imshow(saliency_map_resized, cmap='hot', alpha=0.4)
-            ax.set_title(f'{classifiers[idx]} model')
-            ax.axis('off')
 
-    plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
-    plt.savefig(f'plots/saliency_comparison.png')
-    plt.show()
+            plt.figure(figsize=(5, 5))
+            plt.imshow(img_pil, alpha=0.6)
+            plt.imshow(saliency_map_resized, cmap='hot', alpha=0.4)
+            #plt.title(f'Saliecy Mapping using {classifier} classifier')
+            plt.axis('off')
+
+            plt.savefig(f'plots/saliency_{classifier}_{idx + 1}.png')
+            plt.show()
