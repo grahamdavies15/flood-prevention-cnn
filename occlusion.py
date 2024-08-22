@@ -48,41 +48,38 @@ def process_image(model_path, image_path, device):
     occlusion_attributions = compute_occlusion(model, img_tensor, class_idx)
     return occlusion_attributions, img_pil
 
-def visualize_models(image_path, model_paths, model_names, device):
-    attributions_list = []
-    img_pil = None
+def visualize_image(image_path, model_path, model_name, device, save_path):
+    attributions, img_pil = process_image(model_path, image_path, device)
+    if attributions is not None and img_pil is not None:
+        attributions = attributions.squeeze().cpu().detach().numpy()
+        attributions = np.transpose(attributions, (1, 2, 0))
+        attributions = np.sum(attributions, axis=2)
+        attributions = np.clip(attributions, 0, np.percentile(attributions, 99))
+        attributions = (attributions - attributions.min()) / (attributions.max() - attributions.min())
 
-    for model_path in model_paths:
-        attributions, img_pil = process_image(model_path, image_path, device)
-        if attributions is not None:
-            attributions = attributions.squeeze().cpu().detach().numpy()
-            attributions = np.transpose(attributions, (1, 2, 0))
-            attributions = np.sum(attributions, axis=2)
-            attributions = np.clip(attributions, 0, np.percentile(attributions, 99))
-            attributions = (attributions - attributions.min()) / (attributions.max() - attributions.min())
-            attributions_list.append(attributions)
-
-    if img_pil is not None and len(attributions_list) == 3:
         img_pil_resized = img_pil.resize((224, 224))
         width, height = img_pil_resized.size
 
-        plt.figure(figsize=(15, 5))
+        plt.figure(figsize=(5, 5))
+        plt.imshow(img_pil_resized)
+        plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
+        #plt.title(f'{model_name}')
+        plt.axis('off')
 
-        for i, (attributions, model_name) in enumerate(zip(attributions_list, model_names)):
-            plt.subplot(1, 3, i+1)
-            plt.imshow(img_pil_resized)
-            plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
-            plt.title(f'{model_name}')
-            plt.axis('off')
-
-        plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
-        plt.savefig('plots/occlusion_comparison.png')
+        plt.savefig(save_path)
         plt.show()
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    model_names = ['winter', 'spring', 'autumn']
-    model_paths = [f'weights/{name}_classifier.pth' for name in model_names]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
+    classifier = 'spring'
+    model_path = f'weights/{classifier}_classifier.pth'
 
-    visualize_models(image_path, model_paths, model_names, device)
+    image_paths = [
+        'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
+    ]
+
+    for idx, image_path in enumerate(image_paths):
+        save_path = f'plots/occlusion_{classifier}_{idx + 1}.png'
+        visualize_image(image_path, model_path, classifier, device, save_path)

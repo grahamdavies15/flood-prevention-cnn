@@ -50,7 +50,7 @@ def visualize_attributions(attributions, img_pil, ax, method_name):
     height, width = img_pil_resized.size
     ax.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
 
-    ax.set_title(f'{method_name}')
+    #ax.set_title(f'{method_name}')
     ax.axis('off')
 
 def process_image(model_path, image_path):
@@ -66,18 +66,29 @@ def process_image(model_path, image_path):
     ig_attributions = integrated_gradients(model, img_tensor, class_idx)
     return ig_attributions, img_pil
 
+
 if __name__ == "__main__":
-    classifiers = ['winter', 'spring', 'autumn']
-    model_paths = [f'weights/{classifier}_classifier.pth' for classifier in classifiers]
-    image_path = 'Data/blockagedetection_dataset/images/Cornwall_PenzanceCS/blocked/2022_03_02_10_59.jpg'
+    device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    # Define the single classifier to be used
+    classifier = 'winter'
+    model_path = f'weights/{classifier}_classifier.pth'
 
-    for idx, model_path in enumerate(model_paths):
+    # List of different image paths
+    image_paths = [
+        'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
+    ]
+
+    # Process each image and save the result individually
+    for idx, image_path in enumerate(image_paths):
         attributions, img_pil = process_image(model_path, image_path)
         if attributions is not None:
-            visualize_attributions(attributions, img_pil, axes[idx], classifiers[idx])
+            plt.figure(figsize=(5, 5))
+            ax = plt.gca()  # Get the current axis
+            visualize_attributions(attributions, img_pil, ax, f"Image {idx + 1} - {classifier.capitalize()}")
+            plt.axis('off')
 
-    plt.tight_layout(pad=2.0)  # Add padding to ensure titles are not cut off
-    plt.savefig(f'plots/integrated_gradients_comparison.png')
-    plt.show()
+            plt.savefig(f'plots/integrated_{classifier}_{idx + 1}.png')
+            plt.show()
