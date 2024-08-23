@@ -120,7 +120,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
 
 
 # Choose the season to train on
-season = 'spring'
+season = 'winter'
 # Use a dictionary to map the season name to the corresponding data variable
 season_data_dict = {
     'winter': balanced_winter,
@@ -190,7 +190,7 @@ plt.title('Training and Validation Accuracy')
 plt.legend()
 
 # Save the plot
-plot_filepath = f'{season}_training_validation_plot.png'
+plot_filepath = f'plots/{season}_training_validation_plot.png'
 plt.savefig(plot_filepath)
 print(f"Plot saved to {plot_filepath}")
 
