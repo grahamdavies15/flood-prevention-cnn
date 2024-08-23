@@ -89,7 +89,7 @@ autumn_data = df_images[df_images['season'] == 'Autumn']
 
 print(summary)
 
-# Plotting histogram
+"""# Plotting histogram
 plt.figure(figsize=(12, 6))
 df_images['date'].hist(bins=50, edgecolor='black')
 plt.xlabel('Date')
@@ -97,7 +97,7 @@ plt.ylabel('Number of Images')
 plt.title('Histogram of Image Count by Date')
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
+plt.show() """
 
 # Define top sites
 top_sites = ['sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis',

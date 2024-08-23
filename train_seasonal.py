@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
-import matplotlib.pyplot as plt # did some
+import matplotlib.pyplot as plt
 
 device = torch.device("cuda" if torch.cuda.is_available() else
                           ("mps" if torch.backends.mps.is_available() else "cpu"))
@@ -50,6 +50,9 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
     val_losses = []
     val_accuracies = []
 
+    best_train_acc = 0.0
+    best_val_acc = 0.0
+
     for epoch in range(num_epochs):
         print(f'Epoch {epoch}/{num_epochs - 1}')
         print('-' * 10)
@@ -89,11 +92,13 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
             if phase == 'train':
                 train_losses.append(epoch_loss)
                 train_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                best_train_acc = max(best_train_acc, epoch_acc)
                 if scheduler:
                     scheduler.step()
             else:
                 val_losses.append(epoch_loss)
                 val_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                best_val_acc = max(best_val_acc, epoch_acc)
                 # Early stopping
                 if epoch_acc - best_acc > min_delta:
                     best_acc = epoch_acc
@@ -106,16 +111,26 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
                     print("Early stopping")
                     if best_model_wts is not None:
                         model.load_state_dict(best_model_wts)
-                    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
+                    return model, (train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
 
     print(f'Best val Acc: {best_acc:.4f}')
     if best_model_wts is not None:
         model.load_state_dict(best_model_wts)
-    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
+    return model, (train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
 
 
 # Choose the season to train on
-season_data = balanced_winter
+season = 'spring'
+# Use a dictionary to map the season name to the corresponding data variable
+season_data_dict = {
+    'winter': balanced_winter,
+    'spring': balanced_spring,
+    'summer': balanced_summer,
+    'autumn': balanced_autumn
+}
+
+# Get the data for the selected season
+season_data = season_data_dict[season]
 
 # Extract file paths and labels
 image_filenames = season_data['file_path'].tolist()
@@ -152,7 +167,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Train the model
-model, history = train_model(model, dataloaders, criterion, optimizer, num_epochs=25, min_delta=0.01, patience=5)
+model, history, best_train_acc, best_val_acc = train_model(model, dataloaders, criterion, optimizer, num_epochs=25, min_delta=0.01, patience=5)
 
 # Plot training graph
 train_losses, val_losses, train_accuracies, val_accuracies = history
@@ -174,13 +189,23 @@ plt.ylabel('Accuracy')
 plt.title('Training and Validation Accuracy')
 plt.legend()
 
-plt.show()
+# Save the plot
+plot_filepath = f'{season}_training_validation_plot.png'
+plt.savefig(plot_filepath)
+print(f"Plot saved to {plot_filepath}")
+
+# Save best scores to a file
+scores_filepath = f'{season}_best_scores.txt'
+with open(scores_filepath, 'w') as f:
+    f.write(f'Best Training Accuracy: {best_train_acc:.4f}\n')
+    f.write(f'Best Validation Accuracy: {best_val_acc:.4f}\n')
+print(f"Best scores saved to {scores_filepath}")
 
 # Confirmation prompt before saving the model
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/winter_classifier.pth'  # Change name for saving
+    model_filepath = f'weights/{season}_classifier.pth'  # Change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:

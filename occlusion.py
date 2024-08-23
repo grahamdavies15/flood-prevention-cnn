@@ -31,7 +31,7 @@ def preprocess_image(image_path):
 
 def compute_occlusion(model, img_tensor, class_idx):
     occlusion = Occlusion(model)
-    attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 15))
+    attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 75))
     return attributions
 
 def process_image(model_path, image_path, device):
@@ -71,7 +71,7 @@ def visualize_image(image_path, model_path, model_name, device, save_path):
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifier = 'spring'
+    classifier = 'winter'
     model_path = f'weights/{classifier}_classifier.pth'
 
     image_paths = [

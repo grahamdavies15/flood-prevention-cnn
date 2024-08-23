@@ -10,8 +10,9 @@ from seasonal_data_split import balanced_winter, balanced_spring, balanced_autum
 import matplotlib.pyplot as plt
 
 device = torch.device("cuda" if torch.cuda.is_available() else
-                          ("mps" if torch.backends.mps.is_available() else "cpu"))
+                      ("mps" if torch.backends.mps.is_available() else "cpu"))
 print(f"Using device: {device}")
+
 
 # Define the custom dataset class
 class ScreenDataset(torch.utils.data.Dataset):
@@ -38,6 +39,7 @@ class ScreenDataset(torch.utils.data.Dataset):
         label = self.labels[item]
         return self.preprocess(img), label
 
+
 # Function to train the model
 def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25, min_delta=0.01, patience=5):
     model.to(device)
@@ -49,6 +51,9 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
     train_accuracies = []
     val_losses = []
     val_accuracies = []
+
+    best_train_acc = 0.0
+    best_val_acc = 0.0
 
     for epoch in range(num_epochs):
         print(f'Epoch {epoch}/{num_epochs - 1}')
@@ -89,11 +94,13 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
             if phase == 'train':
                 train_losses.append(epoch_loss)
                 train_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                best_train_acc = max(best_train_acc, epoch_acc)
                 if scheduler:
                     scheduler.step()
             else:
                 val_losses.append(epoch_loss)
                 val_accuracies.append(epoch_acc.cpu().numpy())  # Convert to CPU and then to numpy
+                best_val_acc = max(best_val_acc, epoch_acc)
                 # Early stopping
                 if epoch_acc - best_acc > min_delta:
                     best_acc = epoch_acc
@@ -106,12 +113,14 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
                     print("Early stopping")
                     if best_model_wts is not None:
                         model.load_state_dict(best_model_wts)
-                    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
+                    return model, (
+                    train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
 
     print(f'Best val Acc: {best_acc:.4f}')
     if best_model_wts is not None:
         model.load_state_dict(best_model_wts)
-    return model, (train_losses, val_losses, train_accuracies, val_accuracies)
+    return model, (train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
+
 
 # Combine the data from winter, spring, and autumn
 combined_data = pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
@@ -121,7 +130,8 @@ image_filenames = combined_data['file_path'].tolist()
 labels = combined_data['label'].apply(lambda x: 1 if x == 'blocked' else 0).tolist()
 
 # Split the dataset
-train_filenames, val_filenames, train_labels, val_labels = train_test_split(image_filenames, labels, test_size=0.2, random_state=42)
+train_filenames, val_filenames, train_labels, val_labels = train_test_split(image_filenames, labels, test_size=0.2,
+                                                                            random_state=42)
 
 # Coordinates for cropping (change if needed)
 xmin, xmax, ymin, ymax = -1, -1, -1, -1
@@ -150,7 +160,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Train the model
-model, history = train_model(model, dataloaders, criterion, optimizer, num_epochs=25, min_delta=0.01, patience=5)
+model, history, best_train_acc, best_val_acc = train_model(model, dataloaders, criterion, optimizer, num_epochs=25,
+                                                           min_delta=0.01, patience=5)
 
 # Plot training graph
 train_losses, val_losses, train_accuracies, val_accuracies = history
@@ -172,7 +183,17 @@ plt.ylabel('Accuracy')
 plt.title('Training and Validation Accuracy')
 plt.legend()
 
-plt.show()
+# Save the plot
+plot_filepath = 'training_validation_plot.png'
+plt.savefig(plot_filepath)
+print(f"Plot saved to {plot_filepath}")
+
+# Save best scores to a file
+scores_filepath = 'best_scores.txt'
+with open(scores_filepath, 'w') as f:
+    f.write(f'Best Training Accuracy: {best_train_acc:.4f}\n')
+    f.write(f'Best Validation Accuracy: {best_val_acc:.4f}\n')
+print(f"Best scores saved to {scores_filepath}")
 
 # Confirmation prompt before saving the model
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
