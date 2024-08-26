@@ -184,12 +184,12 @@ plt.title('Training and Validation Accuracy')
 plt.legend()
 
 # Save the plot
-plot_filepath = 'training_validation_plot.png'
+plot_filepath = 'all_training_validation_plot.png'
 plt.savefig(plot_filepath)
 print(f"Plot saved to {plot_filepath}")
 
 # Save best scores to a file
-scores_filepath = 'best_scores.txt'
+scores_filepath = 'all_best_scores.txt'
 with open(scores_filepath, 'w') as f:
     f.write(f'Best Training Accuracy: {best_train_acc:.4f}\n')
     f.write(f'Best Validation Accuracy: {best_val_acc:.4f}\n')
@@ -199,7 +199,7 @@ print(f"Best scores saved to {scores_filepath}")
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = 'weights/combined_season_classifier.pth'  # Change name for saving
+    model_filepath = 'weights/all_classifier.pth'  # Change name for saving
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:

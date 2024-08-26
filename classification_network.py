@@ -3,9 +3,9 @@ from PIL import Image
 from torchvision import transforms
 from torchvision.models import resnet50
 import torch.nn as nn
+import pandas as pd
 
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
-
 
 class ScreenDataset(torch.utils.data.Dataset):
     def __init__(self, filenames, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
@@ -29,15 +29,8 @@ class ScreenDataset(torch.utils.data.Dataset):
             img = img.crop((self.xmin, self.ymin, self.xmax, self.ymax))
         return self.filenames[item], self.preprocess(img)
 
-
-if __name__ == "__main__":
-    # Select the season
-    season = "autumn"  # Change this to "winter", "spring", "summer", or "autumn"
-    model_season = "spring"
-
-    model_filepath = f'weights/{model_season}_classifier.pth'
-
-    # Set the dataset and model filepath based on the selected season
+def predict_for_dataset(season, model, device, threshold=0.5):
+    # Load the dataset based on the selected season
     if season == "winter":
         dataset = balanced_winter
     elif season == "spring":
@@ -46,34 +39,21 @@ if __name__ == "__main__":
         dataset = balanced_summer
     elif season == "autumn":
         dataset = balanced_autumn
+    elif season == 'all':
+        # Combine the data from winter, spring, and autumn
+        dataset = pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
     else:
-        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'summer', 'autumn'.")
+        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'all', 'autumn'.")
 
     image_filenames = dataset['file_path'].tolist()  # list of image filepaths
-    xmin = -1  # coordinates of the trash screen window (-1 if no window), eg 10
-    xmax = -1  # 235
-    ymin = -1  # 10
-    ymax = -1  # 235
-    threshold = 0.5  # blockage threshold value (between 0 and 1)
-
-    batch_size = 32
-
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    xmin, xmax, ymin, ymax = -1, -1, -1, -1  # Adjust these as needed
 
     screen_dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
-    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=batch_size, shuffle=False)
-    print(f"Using device: {device}")
+    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=32, shuffle=False)
 
-    model = resnet50()
-    num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, 2)
-
-    model.to(device)
-    model.load_state_dict(torch.load(model_filepath, map_location=device))
-    model.eval()
     softmax = nn.Softmax(dim=1)
 
-    # has a 'pred' column
+    # Add a 'pred' column to store predictions
     dataset['pred'] = None
 
     for filenames, images in dataloader:
@@ -83,5 +63,25 @@ if __name__ == "__main__":
             prediction = "blocked" if predictions[i, 1].item() > threshold else "clear"
             dataset.loc[dataset['file_path'] == filenames[i], 'pred'] = prediction
 
-    # Save dataframe with predictions and original labels
-    dataset.to_csv(f'csvs/{season}_pred_{model_season}_model_full.csv', index=False)
+    # Save dataframe with predictions
+    dataset.to_csv(f'csvs/{season}_pred_{model_season}_model.csv', index=False)
+    print(f"Predictions saved for {season} dataset.")
+
+if __name__ == "__main__":
+    model_season = "spring"  # Choose the model season (e.g., "spring")
+    model_filepath = f'weights/{model_season}_classifier.pth'
+
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    # Load and prepare the model
+    model = resnet50()
+    num_ftrs = model.fc.in_features
+    model.fc = nn.Linear(num_ftrs, 2)
+    model.to(device)
+    model.load_state_dict(torch.load(model_filepath, map_location=device))
+    model.eval()
+
+    # Predict for each dataset (winter, spring, summer, autumn)
+    for season in ["all"]: # "winter", "spring", "autumn",
+        predict_for_dataset(season, model, device)
