@@ -5,8 +5,7 @@ from torchvision.models import resnet50
 import torch.nn as nn
 import pandas as pd
 
-from seasonal_data_split import balanced_winter, balanced_spring, balanced_autumn
-
+from seasonal_data_split import autumn_test, winter_test, spring_test
 
 class ScreenDataset(torch.utils.data.Dataset):
     def __init__(self, filenames, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
@@ -31,49 +30,43 @@ class ScreenDataset(torch.utils.data.Dataset):
         return self.filenames[item], self.preprocess(img)
 
 
-def predict_for_dataset(season, model, device, threshold=0.5):
-    # Load the dataset based on the selected season
-    if season == "winter":
-        dataset = balanced_winter
-    elif season == "spring":
-        dataset = balanced_spring
-    elif season == "autumn":
-        dataset = balanced_autumn
-    elif season == 'all':
-        # Combine the data from winter, spring, and autumn
-        dataset = pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
-    else:
-        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'summer', 'autumn', 'all'.")
-
-    image_filenames = dataset['file_path'].tolist()  # list of image filepaths
+def predict_for_dataset(season, model, device, test_filenames, threshold=0.5):
     xmin, xmax, ymin, ymax = -1, -1, -1, -1  # Adjust these as needed
 
-    screen_dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
-    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=64, shuffle=True)
+    screen_dataset = ScreenDataset(test_filenames, xmin, xmax, ymin, ymax)
+    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=64, shuffle=False)
 
     softmax = nn.Softmax(dim=1)
 
-    # Add a 'pred' column to store predictions
-    dataset['pred'] = None
-    dataset['season'] = season
+    # Create a DataFrame to store predictions for the test set
+    val_df = pd.DataFrame({'file_path': test_filenames})
+    val_df['pred'] = None
 
     for filenames, images in dataloader:
         images = images.to(device)
         predictions = softmax(model(images)).detach()
         for i in range(len(filenames)):
             prediction = "blocked" if predictions[i, 1].item() > threshold else "clear"
-            dataset.loc[dataset['file_path'] == filenames[i], 'pred'] = prediction
+            val_df.loc[val_df['file_path'] == filenames[i], 'pred'] = prediction
 
-    # Save dataframe with predictions
-    dataset.to_csv(f'csvs/{season}_pred_{model_season}_model.csv', index=False)
-    print(f"Predictions saved for {season} dataset.")
+    # Save the test set DataFrame with predictions
+    val_df.to_csv(f'csvs/{season}_pred_{model_season}_model.csv', index=False)
+    print(f"Predictions saved for {season} test set.")
 
 
 if __name__ == "__main__":
+    # Import the test sets directly from script B
+    season_test_dict = {
+        'winter': winter_test,
+        'spring': spring_test,
+        'autumn': autumn_test,
+        'all': autumn_test + winter_test + spring_test  # Combine all test sets for 'all'
+    }
+
     for model_season in ["winter", "spring", "autumn", "all"]:  # Iterate over model seasons
         model_filepath = f'weights/{model_season}_classifier.pth'
 
-        device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {device}")
 
         # Load and prepare the model
@@ -86,4 +79,5 @@ if __name__ == "__main__":
 
         # Predict for each dataset (winter, spring, autumn, all)
         for season in ["winter", "spring", "autumn", "all"]:
-            predict_for_dataset(season, model, device)
+            test_filenames = season_test_dict[season]
+            predict_for_dataset(season, model, device, test_filenames)

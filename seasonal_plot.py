@@ -12,10 +12,14 @@ dataframes = []
 # Load all CSV files and add a column to identify the model and season
 for file_path in file_paths:
     df = pd.read_csv(file_path)
-    season = file_path.split('_')[0].split('/')[-1]
-    model = file_path.split('_')[2]
+    season = file_path.split('_pred_')[0].split('/')[-1]
+    model = file_path.split('_pred_')[1].split('_model')[0]
     df['model'] = model
     df['season'] = season
+
+    # Convert predictions to numeric form to match labels
+    df['pred'] = df['pred'].map({'clear': 0, 'blocked': 1})
+
     dataframes.append(df)
 
     print(f'Model: {model}, Season: {season}')
@@ -25,9 +29,9 @@ for file_path in file_paths:
 df = pd.concat(dataframes, ignore_index=True)
 print(df.head())  # Inspect the combined DataFrame
 
-
 # Calculate the accuracy for each model and season
-accuracy_df = df.groupby(['model', 'season']).apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(name='accuracy')
+accuracy_df = df.groupby(['model', 'season']).apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(
+    name='accuracy')
 print(accuracy_df)  # Inspect the accuracy DataFrame
 
 # Set up the plot with a larger font size and colour-blind friendly palette

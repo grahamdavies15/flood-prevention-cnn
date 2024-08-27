@@ -4,10 +4,9 @@ from torchvision import transforms, models
 from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import torch.optim as optim
-from sklearn.model_selection import train_test_split
-from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
+from seasonal_data_split import winter_train, winter_val, winter_train_labels, winter_val_labels, spring_train, \
+    spring_val, spring_train_labels, spring_val_labels, autumn_train, autumn_val, autumn_train_labels, autumn_val_labels
 import matplotlib.pyplot as plt
-import pandas as pd
 
 device = torch.device("cuda" if torch.cuda.is_available() else
                           ("mps" if torch.backends.mps.is_available() else "cpu"))
@@ -39,7 +38,7 @@ class ScreenDataset(torch.utils.data.Dataset):
         return self.preprocess(img), label
 
 
-# Function to train the model
+# Function to train the model (from your provided code)
 def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_epochs=25, min_delta=0.01, patience=5):
     model.to(device)
     best_model_wts = None
@@ -119,28 +118,27 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
         model.load_state_dict(best_model_wts)
     return model, (train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
 
-
 # Choose the season to train on
-season = 'all'
+season = 'winter'
+
 # Use a dictionary to map the season name to the corresponding data variable
 season_data_dict = {
-    'winter': balanced_winter,
-    'spring': balanced_spring,
-    'summer': balanced_summer,
-    'autumn': balanced_autumn,
-    'all': pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
+    'winter': (winter_train, winter_val, winter_train_labels, winter_val_labels),
+    'spring': (spring_train, spring_val, spring_train_labels, spring_val_labels),
+    'autumn': (autumn_train, autumn_val, autumn_train_labels, autumn_val_labels),
+    'all': (
+        autumn_train + winter_train + spring_train,
+        autumn_val + winter_val + spring_val,
+        autumn_train_labels + winter_train_labels + spring_train_labels,
+        autumn_val_labels + winter_val_labels + spring_val_labels
+    )
 }
 
-# Get the data for the selected season
-season_data = season_data_dict[season]
-
-# Extract file paths and labels
-image_filenames = season_data['file_path'].tolist()
-labels = season_data['label'].apply(lambda x: 1 if x == 'blocked' else 0).tolist()
-
-# Split the dataset
-train_filenames, val_filenames, train_labels, val_labels = train_test_split(image_filenames, labels, test_size=0.2,
-                                                                            random_state=42)
+if season == 'all':
+    train_filenames, val_filenames, train_labels, val_labels = season_data_dict['all']
+else:
+    # Handle individual seasons
+    train_filenames, val_filenames, train_labels, val_labels = season_data_dict[season]
 
 # Coordinates for cropping (change if needed)
 xmin, xmax, ymin, ymax = -1, -1, -1, -1
@@ -207,7 +205,7 @@ print(f"Best scores saved to {scores_filepath}")
 save_model = input("Do you want to save the model? (yes/no): ").strip().lower()
 if save_model == 'yes':
     # Save the model
-    model_filepath = f'weights/{season}_classifier.pth'  # Change name for saving
+    model_filepath = f'weights/{season}_classifier.pth'
     torch.save(model.state_dict(), model_filepath)
     print(f"Model saved to {model_filepath}")
 else:

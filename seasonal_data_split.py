@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
+from sklearn.model_selection import train_test_split
 
 def label_images(base_dir):
     image_data = []
@@ -139,3 +140,28 @@ print("\nBalanced Summer Data:")
 print(balanced_summer)
 print("\nBalanced Autumn Data:")
 print(balanced_autumn)
+
+# Function to split dataset into training/validation and test sets
+def initial_split(season_data, test_size=0.2, random_state=42):
+    image_filenames = season_data['file_path'].tolist()
+    labels = season_data['label'].apply(lambda x: 1 if x == 'blocked' else 0).tolist()
+    train_val_filenames, test_filenames, train_val_labels, test_labels = train_test_split(
+        image_filenames, labels, test_size=test_size, random_state=random_state)
+    return train_val_filenames, test_filenames, train_val_labels, test_labels
+
+
+# Function to further split the training/validation set into training and validation sets
+def train_val_split(train_val_filenames, train_val_labels, val_size=0.2, random_state=42):
+    train_filenames, val_filenames, train_labels, val_labels = train_test_split(
+        train_val_filenames, train_val_labels, test_size=val_size, random_state=random_state)
+    return train_filenames, val_filenames, train_labels, val_labels
+
+# Splitting data for each season
+autumn_train_val, autumn_test, autumn_train_val_labels, autumn_test_labels = initial_split(balanced_autumn)
+winter_train_val, winter_test, winter_train_val_labels, winter_test_labels = initial_split(balanced_winter)
+spring_train_val, spring_test, spring_train_val_labels, spring_test_labels = initial_split(balanced_spring)
+
+# Further split the training/validation set into training and validation sets
+autumn_train, autumn_val, autumn_train_labels, autumn_val_labels = train_val_split(autumn_train_val, autumn_train_val_labels)
+winter_train, winter_val, winter_train_labels, winter_val_labels = train_val_split(winter_train_val, winter_train_val_labels)
+spring_train, spring_val, spring_train_labels, spring_val_labels = train_val_split(spring_train_val, spring_train_val_labels)
