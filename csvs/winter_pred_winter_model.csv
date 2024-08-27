@@ -14,7 +14,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_12_14_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_03_18_10_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_04_08_29.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_18_11_03.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_18_11_03.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/clear/2022_02_11_15_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_21_08_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_09_16_55.jpg,1,blocked
@@ -36,9 +36,9 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_06_07_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/blocked/2022_03_15_07_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonForSt/blocked/2022_03_01_08_50.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/blocked/2022_02_22_15_55.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/blocked/2022_02_22_15_55.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_17_11_29.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_03_18_17_03.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_03_18_17_03.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_07_12_57.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/blocked/2022_03_18_09_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/clear/2022_03_13_11_58.jpg,0,clear
@@ -57,7 +57,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_03_14_09_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_22_14_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_LostwithielUP_Scree/blocked/2023_01_16_12_59.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_04_08_55.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_04_08_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_18_14_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_07_08_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_03_06_15_19.jpg,1,blocked
@@ -80,7 +80,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_17_07_29.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_23_16_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_18_10_02.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_18_17_10.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_18_17_10.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_03_08_15_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_LostwithielUP_Scree/clear/2022_02_25_13_45.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_KingsandCP/clear/2022_02_12_10_59.jpg,0,clear
@@ -152,7 +152,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_02_22_14_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/clear/2022_03_15_15_24.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_03_04_11_50.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/blocked/2022_03_06_17_58.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/blocked/2022_03_06_17_58.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_03_03_14_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/clear/2022_02_13_11_41.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonKa/clear/2022_02_27_09_07.jpg,0,clear
@@ -160,7 +160,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/blocked/2022_03_14_08_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/clear/2022_03_13_17_39.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_18_10_48.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_02_18_07_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_02_18_07_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_01_30_11_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_SwimbridgeScree/blocked/2022_02_07_10_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_02_16_07.jpg,0,clear
@@ -202,7 +202,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_KingsandCP/clear/2022_01_28_16_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/clear/2022_03_07_11_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_16_17_02.jpg,1,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_03_10_15_03.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_03_10_15_03.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_brutondam_cam1/clear/2022_02_13_11_05.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/blocked/2022_03_13_15_57.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_03_01_12_58.jpg,1,blocked
@@ -229,7 +229,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_01_07_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_16_11_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_03_13_12_31.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/blocked/2022_03_14_11_05.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/blocked/2022_03_14_11_05.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/blocked/2022_03_13_14_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/clear/2022_02_20_11_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_01_14_58.jpg,1,blocked
@@ -257,9 +257,9 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_09_14_30.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/blocked/2022_03_06_11_36.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_03_12_02.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_03_01_17_59.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_03_01_17_59.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_03_04_11_19.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_20_11_30.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_20_11_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_16_18_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_18_13_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonChaddlewood_MainScree/blocked/2022_03_11_17_55.jpg,1,blocked
@@ -267,7 +267,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_LostwithielUP_Scree/clear/2022_02_13_15_47.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_15_15_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/clear/2022_03_05_08_38.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_minehead_cam1/blocked/2022_02_06_13_10.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_minehead_cam1/blocked/2022_02_06_13_10.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2023_01_10_13_52.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/clear/2022_02_04_09_56.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_22_13_30.jpg,0,clear
@@ -304,7 +304,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_08_10_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonForSt/clear/2022_02_03_10_52.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/blocked/2022_02_19_13_59.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_13_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_13_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/clear/2022_02_01_12_00.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/blocked/2022_02_19_16_38.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_03_05_13_32.jpg,0,clear
@@ -316,7 +316,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_CawsandCP/blocked/2023_01_05_11_01.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_03_04_17_19.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_01_30_09_02.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/blocked/2022_02_22_12_57.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/blocked/2022_02_22_12_57.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_03_02_10_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_SwimbridgeScree/blocked/2022_02_06_12_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_03_07_15_58.jpg,0,clear
@@ -376,9 +376,9 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_02_28_13_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_10_08_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/blocked/2022_03_17_06_58.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_16_12_08.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_16_12_08.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_04_16_32.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/blocked/2022_02_06_15_23.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/blocked/2022_02_06_15_23.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_05_13_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_21_15_08.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstaplePortmarshLane/clear/2023_01_16_12_18.jpg,0,clear
@@ -424,7 +424,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_05_10_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_17_10_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_02_09_29.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/blocked/2022_03_18_11_59.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/blocked/2022_03_18_11_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_12_16_57.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_01_31_15_07.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_03_03_15_55.jpg,0,clear
@@ -503,7 +503,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_21_13_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_20_15_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_16_08_06.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_21_12_59.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_21_12_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_03_06_09_04.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_03_08_08_50.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_09_14_02.jpg,1,blocked
@@ -566,7 +566,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_07_08_41.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_09_11_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_02_08_59.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_02_21_16_59.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_02_21_16_59.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/clear/2022_02_20_14_32.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_02_03_16_03.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_02_10_07_50.jpg,1,blocked
@@ -580,7 +580,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_03_09_17_23.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_03_01_13_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_02_21_11_55.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_10_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_10_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_02_08_08_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_03_17_13_50.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_13_16_02.jpg,1,blocked
@@ -595,7 +595,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_26_14_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_11_09_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_07_12_55.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_22_13_57.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_22_13_57.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_02_12_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_motcombe_cam1/clear/2023_01_13_11_49.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_03_11_55.jpg,1,blocked
@@ -610,7 +610,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_17_13_08.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_KingsandCP/blocked/2022_03_06_14_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_19_09_56.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/clear/2022_02_26_16_59.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/clear/2022_02_26_16_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/clear/2022_02_11_10_19.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_02_21_09_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_02_02_15_59.jpg,0,clear
@@ -619,12 +619,12 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_brutondam_cam1/blocked/2022_02_21_10_03.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_01_29_12_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_15_14_32.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_02_15_16_06.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_02_15_16_06.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/clear/2022_03_11_13_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_03_04_16_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_03_05_17_03.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_03_12_55.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_motcombe_cam1/blocked/2022_03_02_09_45.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_motcombe_cam1/blocked/2022_03_02_09_45.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_08_15_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/clear/2022_03_18_13_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_22_16_30.jpg,0,clear
@@ -667,7 +667,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/clear/2022_02_12_10_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_03_07_11_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_02_02_17_02.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/blocked/2023_01_16_10_55.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/blocked/2023_01_16_10_55.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_ashtoncollitersbrooksplitter_cam2/clear/2022_02_06_08_00.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_04_13_30.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_03_13_08_30.jpg,1,blocked
@@ -703,7 +703,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_21_13_01.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstaplePortmarshLane/blocked/2022_03_10_12_06.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_03_10_11_09.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_02_24_12_29.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_02_24_12_29.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_02_10_56.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/clear/2022_03_13_12_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_01_31_14_55.jpg,0,clear
@@ -725,7 +725,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2023_01_10_11_00.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_04_14_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/clear/2022_03_15_17_55.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonChaddlewood_MainScree/clear/2022_02_14_11_59.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonChaddlewood_MainScree/clear/2022_02_14_11_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/blocked/2022_02_19_11_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_03_03_07_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_10_07_55.jpg,1,blocked
@@ -745,7 +745,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_motcombe_cam1/clear/2022_03_15_08_46.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_02_17_07_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_26_16_32.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_14_13_54.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_14_13_54.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_03_16_16_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_50.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_03_05_10_00.jpg,0,clear
@@ -767,7 +767,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/blocked/2022_02_23_13_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_04_16_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/blocked/2022_03_05_14_59.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/clear/2022_02_24_14_59.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_LympstoneScree/clear/2022_02_24_14_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Holbeam_Impound/blocked/2022_02_23_10_45.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_24_16_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/blocked/2022_03_07_10_28.jpg,1,blocked
@@ -780,7 +780,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_24_11_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_21_12_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_02_21_14_59.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_09_14_55.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_09_14_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_10_15_08.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/clear/2022_02_10_15_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_LostwithielUP_Scree/blocked/2022_02_24_08_44.jpg,1,blocked
@@ -806,7 +806,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_16_07_10.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_05_09_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_15_10_50.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/clear/2023_01_07_10_55.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/clear/2023_01_07_10_55.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_02_18_16_19.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_21_11_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_KingsandCP/blocked/2022_02_28_16_59.jpg,1,blocked
@@ -843,8 +843,8 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Holbeam_Impound/blocked/2022_02_14_09_15.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_24_08_10.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_12_09_29.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_ashtoncollitersbrooksplitter_cam2/blocked/2022_02_23_17_00.jpg,1,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2023_01_10_14_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_ashtoncollitersbrooksplitter_cam2/blocked/2022_02_23_17_00.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2023_01_10_14_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_28_10_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_17_08_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_03_04_11_59.jpg,0,clear
@@ -861,7 +861,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2023_01_09_10_52.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_03_10_11_56.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_13_16_29.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_ashtoncollitersbrooksplitter_cam2/blocked/2022_02_18_08_00.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_ashtoncollitersbrooksplitter_cam2/blocked/2022_02_18_08_00.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/blocked/2022_03_01_12_00.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_01_14_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_10_16_29.jpg,0,clear
@@ -895,7 +895,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Holbeam_Impound/clear/2022_02_05_14_45.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_02_18_11_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_01_31_10_03.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_03_01_14_55.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_03_01_14_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/blocked/2022_03_07_12_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_03_07_13_19.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_01_30_10_02.jpg,0,clear
@@ -908,8 +908,8 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/blocked/2023_01_13_08_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/clear/2022_02_10_07_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/clear/2022_01_30_12_57.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_13_09_08.jpg,1,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_14_14_59.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_13_09_08.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_14_14_59.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_02_16_09_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_03_10_08.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_26_11_31.jpg,1,blocked
@@ -1025,7 +1025,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corsham_cam1/clear/2022_02_01_16_56.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_03_06_10_31.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_13_16_09.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_20_17_03.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_20_17_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_16_11_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_16_06_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_16_11_08.jpg,1,blocked
@@ -1079,7 +1079,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_02_14_16_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_05_09_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_07_13_55.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_18_12_58.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_18_12_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_23_15_32.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_02_23_12_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_02_27_15_50.jpg,0,clear
@@ -1096,14 +1096,14 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/clear/2022_03_08_09_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2022_03_03_13_00.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2022_03_06_11_49.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_SwimbridgeScree/clear/2022_03_02_10_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_SwimbridgeScree/clear/2022_03_02_10_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/blocked/2022_02_19_11_52.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_05_13_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_27_09_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_01_31_09_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_02_23_15_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_22_10_50.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstaplePortmarshLane/clear/2023_01_12_10_32.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstaplePortmarshLane/clear/2023_01_12_10_32.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/clear/2022_03_17_10_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_02_21_09_08.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_26_11_09.jpg,0,clear
@@ -1120,7 +1120,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_20_09_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_01_08_57.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_motcombe_cam1/blocked/2022_03_17_14_46.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_04_14_08.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_04_14_08.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_03_12_16_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/blocked/2022_03_02_11_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_09_16_31.jpg,0,clear
@@ -1137,14 +1137,14 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_07_16_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/blocked/2022_02_20_10_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/clear/2022_02_20_08_29.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_02_04_15_59.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_WadebridgePolmorla/clear/2022_02_04_15_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_01_29_12_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/blocked/2022_02_22_09_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_02_09_32.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_02_13_16_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/clear/2022_02_16_16_47.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/clear/2022_03_11_10_59.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_02_16_12_59.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_02_16_12_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/clear/2022_03_10_12_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/blocked/2022_03_16_08_09.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/clear/2022_02_05_14_55.jpg,0,clear
@@ -1160,7 +1160,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_20_16_10.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_01_30_15_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/clear/2022_02_16_12_58.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_18_09_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_18_09_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_01_16_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_01_28_15_07.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/blocked/2022_02_21_09_55.jpg,1,blocked
@@ -1183,7 +1183,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2022_01_28_17_39.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_08_17_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_01_09_29.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_09_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_03_09_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/blocked/2022_03_13_11_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_02_11_08_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_02_03_14_03.jpg,0,clear
@@ -1201,15 +1201,15 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/clear/2022_03_03_16_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_KingsandCP/clear/2022_03_12_12_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_03_16_06_55.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_02_14_07_59.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/blocked/2022_02_14_07_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/blocked/2022_02_23_16_50.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_stannesscreen_cam1/clear/2022_02_09_11_05.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_stannesscreen_cam1/clear/2022_02_09_11_05.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_04_12_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_03_07_09_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_05_13_02.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_03_16_11_10.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_07_08_30.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_16_17_08.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_16_17_08.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_01_30_13_32.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_16_17_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/clear/2023_01_10_09_55.jpg,0,clear
@@ -1218,7 +1218,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_03_08_14_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_19_17_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_03_03_10_55.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_02_17_10_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_02_17_10_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_10_09_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_brutondam_cam1/blocked/2022_02_21_11_04.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/blocked/2022_02_07_11_03.jpg,1,blocked
@@ -1288,7 +1288,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/clear/2022_02_03_13_00.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_02_14_08_50.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/clear/2022_03_12_12_19.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/blocked/2022_02_21_10_38.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/blocked/2022_02_21_10_38.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_10_10_31.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/clear/2022_02_27_13_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/blocked/2022_03_14_06_59.jpg,1,blocked
@@ -1327,7 +1327,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PlymptonChaddlewood_MainScree/blocked/2022_03_12_07_52.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_08_12_32.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/clear/2022_02_17_09_50.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/blocked/2022_02_22_10_56.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/blocked/2022_02_22_10_56.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_18_13_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_SwimbridgeScree/blocked/2022_02_06_13_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_03_01_12_03.jpg,1,blocked
@@ -1335,7 +1335,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/blocked/2022_03_05_14_50.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BodminPetrocsWell_Scree/clear/2022_02_19_11_57.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/blocked/2022_02_21_07_38.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_24_09_30.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_24_09_30.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_15_16_00.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_02_06_16_02.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenrynTP/clear/2022_03_15_16_39.jpg,0,clear
@@ -1352,7 +1352,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/blocked/2022_03_16_10_05.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_25_09_09.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_01_29_14_07.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_12_18_00.jpg,1,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_03_12_18_00.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PorthlevenScree/blocked/2022_03_05_06_59.jpg,1,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_02_17_14_50.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/blocked/2022_02_25_14_35.jpg,1,blocked
@@ -1380,14 +1380,14 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_18_10_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/blocked/2022_02_14_12_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PolperroLangreek/blocked/2022_03_10_14_19.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2022_03_15_07_51.jpg,0,blocked
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/clear/2022_03_15_07_51.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_eastville_cam2/clear/2022_02_02_16_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_KenwithValleyChannelScree/clear/2022_03_12_12_55.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_01_30_15_32.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_PenzanceCC/blocked/2022_02_16_08_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/blocked/2022_02_01_15_59.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleBradiford/clear/2022_03_17_15_59.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_02_13_59.jpg,0,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_TamertonFoliot/clear/2022_03_02_13_59.jpg,0,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/blocked/2022_03_13_12_57.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/clear/2023_01_07_15_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_mineheadgate_cam1/blocked/2023_01_14_10_55.jpg,1,blocked
@@ -1463,7 +1463,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Crinnis/clear/2022_02_11_08_18.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_14_12_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/clear/2022_03_05_11_32.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/blocked/2022_03_05_08_54.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_BarnstapleConeyGut_Scree/blocked/2022_03_05_08_54.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_brutondam_cam1/clear/2022_03_11_10_03.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_midsomernorton_cam1/blocked/2022_02_14_11_58.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_pilloutfall_cam1/clear/2022_03_14_15_50.jpg,0,clear
@@ -1472,7 +1472,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_uphill_cam1/blocked/2022_02_17_09_55.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BoscastleMarine/clear/2022_02_13_09_58.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/clear/2022_02_04_13_30.jpg,0,clear
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_03_13_15_30.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_03_13_15_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_BudeCedarGrove/clear/2022_01_31_09_03.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Portreath/clear/2022_02_24_13_59.jpg,0,clear
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_Mevagissey_PreScree/clear/2022_02_04_13_25.jpg,0,clear
@@ -1524,7 +1524,7 @@ file_path,label,pred
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_02_24_17_29.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_southperrott_cam1/blocked/2022_02_28_12_41.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_03_04_17_29.jpg,1,blocked
-/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_03_10_30.jpg,1,clear
+/Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_03_10_30.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Devon_Buckfastleigh/blocked/2022_02_17_16_32.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/Cornwall_IdlessDam_cam1/blocked/2022_02_21_08_03.jpg,1,blocked
 /Users/graham/Documents/Dissertation/Data/blockagedetection_dataset/images/sites_sistontunnel_cam1/clear/2022_02_10_13_03.jpg,0,clear
