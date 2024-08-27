@@ -52,7 +52,7 @@ def process_image(model, image_path, device):
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifier = 'spring'  # Use a single classifier
+    classifier = 'all'  # Use a single classifier
     model_path = f'weights/{classifier}_classifier.pth'
     image_paths = [
         'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',

@@ -35,7 +35,7 @@ def visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx):
     for activation_map in activation_maps:
         activation_map = activation_map.squeeze(0)
         activation_map_pil = transforms.functional.to_pil_image(activation_map, mode='F')
-        result = overlay_mask(img_pil, activation_map_pil, alpha=0.5)
+        result = overlay_mask(img_pil, activation_map_pil, alpha=0.6)
         return result
 
 def process_image(model_path, image_path, device):
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
     # Define the seasons and corresponding model paths
-    classifier = 'autumn'  # Single classifier to be used
+    classifier = 'all'  # Single classifier to be used
     model_path = f'weights/{classifier}_classifier.pth'
 
     # List of different image paths

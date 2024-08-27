@@ -7,6 +7,7 @@ import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
 import matplotlib.pyplot as plt
+import pandas as pd
 
 device = torch.device("cuda" if torch.cuda.is_available() else
                           ("mps" if torch.backends.mps.is_available() else "cpu"))
@@ -120,13 +121,14 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
 
 
 # Choose the season to train on
-season = 'winter'
+season = 'all'
 # Use a dictionary to map the season name to the corresponding data variable
 season_data_dict = {
     'winter': balanced_winter,
     'spring': balanced_spring,
     'summer': balanced_summer,
-    'autumn': balanced_autumn
+    'autumn': balanced_autumn,
+    'all': pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
 }
 
 # Get the data for the selected season

@@ -5,7 +5,8 @@ from torchvision.models import resnet50
 import torch.nn as nn
 import pandas as pd
 
-from seasonal_data_split import balanced_winter, balanced_spring, balanced_summer, balanced_autumn
+from seasonal_data_split import balanced_winter, balanced_spring, balanced_autumn
+
 
 class ScreenDataset(torch.utils.data.Dataset):
     def __init__(self, filenames, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
@@ -29,32 +30,32 @@ class ScreenDataset(torch.utils.data.Dataset):
             img = img.crop((self.xmin, self.ymin, self.xmax, self.ymax))
         return self.filenames[item], self.preprocess(img)
 
+
 def predict_for_dataset(season, model, device, threshold=0.5):
     # Load the dataset based on the selected season
     if season == "winter":
         dataset = balanced_winter
     elif season == "spring":
         dataset = balanced_spring
-    elif season == "summer":
-        dataset = balanced_summer
     elif season == "autumn":
         dataset = balanced_autumn
     elif season == 'all':
         # Combine the data from winter, spring, and autumn
         dataset = pd.concat([balanced_spring, balanced_autumn, balanced_winter], ignore_index=True)
     else:
-        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'all', 'autumn'.")
+        raise ValueError(f"Invalid season: {season}. Choose from 'winter', 'spring', 'summer', 'autumn', 'all'.")
 
     image_filenames = dataset['file_path'].tolist()  # list of image filepaths
     xmin, xmax, ymin, ymax = -1, -1, -1, -1  # Adjust these as needed
 
     screen_dataset = ScreenDataset(image_filenames, xmin, xmax, ymin, ymax)
-    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=32, shuffle=False)
+    dataloader = torch.utils.data.DataLoader(screen_dataset, batch_size=64, shuffle=True)
 
     softmax = nn.Softmax(dim=1)
 
     # Add a 'pred' column to store predictions
     dataset['pred'] = None
+    dataset['season'] = season
 
     for filenames, images in dataloader:
         images = images.to(device)
@@ -67,21 +68,22 @@ def predict_for_dataset(season, model, device, threshold=0.5):
     dataset.to_csv(f'csvs/{season}_pred_{model_season}_model.csv', index=False)
     print(f"Predictions saved for {season} dataset.")
 
+
 if __name__ == "__main__":
-    model_season = "spring"  # Choose the model season (e.g., "spring")
-    model_filepath = f'weights/{model_season}_classifier.pth'
+    for model_season in ["winter", "spring", "autumn", "all"]:  # Iterate over model seasons
+        model_filepath = f'weights/{model_season}_classifier.pth'
 
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"Using device: {device}")
+        device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        print(f"Using device: {device}")
 
-    # Load and prepare the model
-    model = resnet50()
-    num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, 2)
-    model.to(device)
-    model.load_state_dict(torch.load(model_filepath, map_location=device))
-    model.eval()
+        # Load and prepare the model
+        model = resnet50()
+        num_ftrs = model.fc.in_features
+        model.fc = nn.Linear(num_ftrs, 2)
+        model.to(device)
+        model.load_state_dict(torch.load(model_filepath, map_location=device))
+        model.eval()
 
-    # Predict for each dataset (winter, spring, summer, autumn)
-    for season in ["all"]: # "winter", "spring", "autumn",
-        predict_for_dataset(season, model, device)
+        # Predict for each dataset (winter, spring, autumn, all)
+        for season in ["winter", "spring", "autumn", "all"]:
+            predict_for_dataset(season, model, device)

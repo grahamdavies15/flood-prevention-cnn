@@ -71,7 +71,7 @@ if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
     # Define the single classifier to be used
-    classifier = 'spring'
+    classifier = 'all'
     model_path = f'weights/{classifier}_classifier.pth'
 
     # List of different image paths

@@ -71,7 +71,7 @@ def visualize_image(image_path, model_path, model_name, device, save_path):
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifier = 'winter'
+    classifier = 'all'
     model_path = f'weights/{classifier}_classifier.pth'
 
     image_paths = [
