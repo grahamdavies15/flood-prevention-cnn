@@ -31,7 +31,7 @@ def preprocess_image(image_path):
 
 def compute_occlusion(model, img_tensor, class_idx):
     occlusion = Occlusion(model)
-    attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 75))
+    attributions = occlusion.attribute(img_tensor, target=class_idx, strides=(3, 8, 8), sliding_window_shapes=(3, 15, 15))
     return attributions
 
 def process_image(model_path, image_path, device):
@@ -75,10 +75,16 @@ if __name__ == "__main__":
     model_path = f'weights/{classifier}_classifier.pth'
 
     image_paths = [
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
+    ]
+
+    """image_paths = [
         'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
         'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
-    ]
+    ]"""
 
     for idx, image_path in enumerate(image_paths):
         save_path = f'plots/occlusion_{classifier}_{idx + 1}.png'

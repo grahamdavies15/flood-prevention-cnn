@@ -52,12 +52,12 @@ def process_image(model, image_path, device):
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifier = 'all'  # Use a single classifier
+    classifier = 'spring'  # Use a single classifier
     model_path = f'weights/{classifier}_classifier.pth'
     image_paths = [
-        'Data/blockagedetection_dataset/images/Cornwall_Portreath/blocked/2022_11_26_12_59.jpg',
-        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_17_11_30.jpg',
-        'Data/blockagedetection_dataset/images/sites_corshamaqueduct_cam1/blocked/2022_04_19_13_29.jpg'
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
     ]
 
     # Load the model once
