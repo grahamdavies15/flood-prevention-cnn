@@ -96,11 +96,11 @@ plt.savefig(os.path.join(script_dir, 'plots/data_dates.png'))
 plt.show()
 
 # Define top sites
-top_sites = [
+"""top_sites = [
     'sites_corshamaqueduct_cam1', 'Cornwall_BudeCedarGrove', 'Cornwall_Crinnis',
     'Devon_BarnstapleConeyGut_Scree', 'Cornwall_Mevagissey_PreScree',
     'sites_sheptonmallet_cam2', 'Cornwall_PenzanceCC'
-]
+]"""
 
 
 # Function to filter and balance data within each group
