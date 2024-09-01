@@ -71,13 +71,13 @@ if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
     # Define the single classifier to be used
-    classifier = 'all'
+    classifier = 'winter'
     model_path = f'weights/{classifier}_classifier.pth'
 
     # List of different image paths
     image_paths = [
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
-        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_07_08_30.jpg',
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
     ]
 
@@ -89,6 +89,6 @@ if __name__ == "__main__":
             ax = plt.gca()  # Get the current axis
             visualize_attributions(attributions, img_pil, ax, f"Image {idx + 1} - {classifier.capitalize()}")
             plt.axis('off')
-
-            plt.savefig(f'plots/integrated_{classifier}_{idx + 1}.png')
+            plt.tight_layout()
+            plt.savefig(f'plots/integrated_{classifier}_{idx + 1}.png', bbox_inches='tight')
             plt.show()

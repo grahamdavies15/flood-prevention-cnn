@@ -65,18 +65,18 @@ def visualize_image(image_path, model_path, model_name, device, save_path):
         plt.imshow(attributions, cmap='hot', alpha=0.6, extent=(0, width, height, 0))
         #plt.title(f'{model_name}')
         plt.axis('off')
-
-        plt.savefig(save_path)
+        plt.tight_layout()
+        plt.savefig(save_path, bbox_inches='tight')
         plt.show()
 
 if __name__ == "__main__":
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-    classifier = 'all'
+    classifier = 'spring'
     model_path = f'weights/{classifier}_classifier.pth'
 
     image_paths = [
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
-        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_07_08_30.jpg',
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
     ]
 

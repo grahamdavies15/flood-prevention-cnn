@@ -6,6 +6,16 @@ from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from PIL import Image
+import random
+import numpy as np
+
+def set_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def load_model(model_path, device):
     model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
@@ -55,16 +65,19 @@ def process_image(model_path, image_path, device):
     return visualize_cam(model, cam_extractor, img_tensor, img_pil, class_idx)
 
 if __name__ == "__main__":
+    # Set a fixed seed for reproducibility
+    set_seed(42)
+
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
     # Define the seasons and corresponding model paths
-    classifier = 'all'  # Single classifier to be used
+    classifier = 'autumn'  # Single classifier to be used
     model_path = f'weights/{classifier}_classifier.pth'
 
     # List of different image paths
     image_paths = [
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
-        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_07_08_30.jpg',
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
     ]
 
@@ -74,8 +87,7 @@ if __name__ == "__main__":
         if result is not None:
             plt.figure(figsize=(5, 5))
             plt.imshow(result)
-            #plt.title(f"Image {idx + 1} - {classifier.capitalize()}")
             plt.axis('off')
-
-            plt.savefig(f'plots/gradcam_{classifier}_{idx + 1}.png')
+            plt.tight_layout()
+            plt.savefig(f'plots/gradcam_{classifier}_{idx + 1}.png', bbox_inches='tight')
             plt.show()

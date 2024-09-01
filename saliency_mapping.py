@@ -56,7 +56,7 @@ if __name__ == "__main__":
     model_path = f'weights/{classifier}_classifier.pth'
     image_paths = [
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_10_19_08_30.jpg',
-        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_04_08_30.jpg',
+        'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_02_07_08_30.jpg',
         'Data/blockagedetection_dataset/images/sites_sheptonmallet_cam2/blocked/2022_04_08_08_30.jpg'
     ]
 
@@ -73,6 +73,6 @@ if __name__ == "__main__":
             plt.imshow(saliency_map_resized, cmap='hot', alpha=0.4)
             #plt.title(f'Saliecy Mapping using {classifier} classifier')
             plt.axis('off')
-
-            plt.savefig(f'plots/saliency_{classifier}_{idx + 1}.png')
+            plt.tight_layout()
+            plt.savefig(f'plots/saliency_{classifier}_{idx + 1}.png', bbox_inches='tight')
             plt.show()
