@@ -119,7 +119,7 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler=None, num_ep
     return model, (train_losses, val_losses, train_accuracies, val_accuracies), best_train_acc, best_val_acc
 
 # Choose the season to train on
-season = 'winter'
+season = 'autumn'
 
 # Use a dictionary to map the season name to the corresponding data variable
 season_data_dict = {

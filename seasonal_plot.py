@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import glob
+from sklearn.metrics import f1_score
 
 # File paths
 file_paths = glob.glob('csvs/*_pred_*_model.csv')
@@ -30,14 +31,20 @@ df = pd.concat(dataframes, ignore_index=True)
 print(df.head())  # Inspect the combined DataFrame
 
 # Calculate the accuracy for each model and season
-accuracy_df = df.groupby(['model', 'season']).apply(lambda x: (x['label'] == x['pred']).mean()).reset_index(
-    name='accuracy')
+accuracy_df = df.groupby(['model', 'season']).apply(lambda x: pd.Series({
+        'accuracy': (x['label'] == x['pred']).mean(),
+        'f1_score': f1_score(x['label'], x['pred']) }))
+
 print(accuracy_df)  # Inspect the accuracy DataFrame
 
-# Set up the plot with a larger font size and colour-blind friendly palette
+# Set up a custom color palette using 'skyblue' and 'lightcoral'
+custom_palette = ['skyblue', 'lightcoral']
+
+# Set up the plot with a larger font size and the custom color palette
 plt.figure(figsize=(14, 8))
-sns.set_palette("colorblind")  # Ensure this line is in place
-sns.barplot(data=accuracy_df, x='season', y='accuracy', hue='model', width=0.6)  # Adjusted width for spacing
+sns.set_palette(custom_palette)  # Use the custom palette
+
+sns.barplot(data=accuracy_df.reset_index(), x='season', y='accuracy', hue='model', width=0.6)
 
 # Add the title and labels with larger font sizes
 plt.title('Prediction Accuracy by Season and Model', fontsize=20, y=1.05)  # Moved the title further up
@@ -54,8 +61,7 @@ plt.legend(title='Model', fontsize=12, title_fontsize=14, loc='lower right')
 # Annotate the bars with accuracy values, ensuring consistent decimal places
 for p in plt.gca().patches:
     height = p.get_height()
-    # Only annotate if height is greater than a very small threshold
-    if height > 0.001:
+    if height > 0.001:  # Only annotate if height is greater than a very small threshold
         plt.gca().annotate(f'{height:.2f}', (p.get_x() + p.get_width() / 2., height),
                            ha='center', va='center', fontsize=12, color='black', xytext=(0, 8),
                            textcoords='offset points')

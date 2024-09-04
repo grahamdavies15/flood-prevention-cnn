@@ -84,16 +84,6 @@ spring_data = df_images[df_images['season'] == 'Spring']
 summer_data = df_images[df_images['season'] == 'Summer']
 autumn_data = df_images[df_images['season'] == 'Autumn']
 
-# Plotting histogram and saving the figure
-plt.figure(figsize=(12, 6))
-df_images['date'].hist(bins=50, edgecolor='black')
-plt.xlabel('Date')
-plt.ylabel('Number of Images')
-plt.title('Histogram of Image Count by Date')
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.savefig(os.path.join(script_dir, 'plots/data_dates.png'))
-plt.show()
 
 # Define top sites
 """top_sites = [
@@ -161,3 +151,32 @@ winter_train, winter_val, winter_train_labels, winter_val_labels = train_val_spl
                                                                                    winter_train_val_labels)
 spring_train, spring_val, spring_train_labels, spring_val_labels = train_val_split(spring_train_val,
                                                                                    spring_train_val_labels)
+
+
+# Combine the balanced datasets for all seasons after balancing
+balanced_data = pd.concat([balanced_winter, balanced_spring, balanced_summer, balanced_autumn])
+bins = 50
+
+# Plot the original histogram (before balancing)
+plt.figure(figsize=(12, 6))
+df_images['date'].hist(bins=bins, edgecolor='black', color='skyblue')
+plt.xlabel('Date', fontsize=12)
+plt.ylabel('Number of Images', fontsize=12)
+plt.title('Histogram of Image Count by Date (Before Balancing)', fontsize=14)
+plt.xticks(rotation=45)
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.savefig(os.path.join(script_dir, 'plots/data_dates_before_balancing.png'))
+plt.show()
+
+# Plot the second histogram (after balancing)
+plt.figure(figsize=(12, 6))
+balanced_data['date'].hist(bins=bins, edgecolor='black', color='lightcoral')
+plt.xlabel('Date', fontsize=12)
+plt.ylabel('Number of Images', fontsize=12)
+plt.title('Histogram of Image Count by Date (After Balancing)', fontsize=14)
+plt.xticks(rotation=45)
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.savefig(os.path.join(script_dir, 'plots/data_dates_after_balancing.png'))
+plt.show()

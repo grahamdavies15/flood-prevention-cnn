@@ -77,8 +77,11 @@ print(missing_seasons[['site', 'file_path']])
 # Group by season and label, then count the images
 season_summary = df_images.groupby(['season', 'label']).size().unstack(fill_value=0)
 
+# Define the color palette to match 'skyblue' for blocked, 'lightcoral' for clear, and add a third for 'other'
+custom_colors = ['lightcoral', 'lightgreen', 'skyblue']
+
 # Plotting the bar plot with stacked sections for each label
-season_summary.plot(kind='bar', stacked=True, figsize=(10, 7), color=['blue', 'green', 'red'])
+season_summary.plot(kind='bar', stacked=True, figsize=(10, 7), color=custom_colors)
 plt.title('Distribution of Blocked, Clear, and Other Images by Season')
 plt.xlabel('Season')
 plt.ylabel('Number of Images')
