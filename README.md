@@ -1,5 +1,8 @@
 # Master's Research Project
-## MSc Data Science, University of Bath
+
+
+## Graham Davies, MSc Data Science, University of Bath
+
 
 # Project Overview
 
