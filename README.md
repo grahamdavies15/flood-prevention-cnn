@@ -3,7 +3,7 @@
 
 # Project Overview
 
-This directory contains various scripts, each of which can be executed independently, provided there is a `Data` folder in the same directory. The `Data` folder should contain the `blockagedetection_dataset` as sourced from [Van de Alie et al.]([https://example.com](https://researchdata.reading.ac.uk/498/)).
+This directory contains various scripts, each of which can be executed independently, provided there is a `Data` folder in the same directory. The `Data` folder should contain the `blockagedetection_dataset` as sourced from [Vandaele et al., 2023](https://researchdata.reading.ac.uk/498/).
 
 ## Scripts
 
