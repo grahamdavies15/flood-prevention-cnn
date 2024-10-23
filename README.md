@@ -1,9 +1,6 @@
 # Master's Research Project
 
 
-## Graham Davies, MSc Data Science, University of Bath
-
-
 # Project Overview
 
 This directory contains various scripts, each of which can be executed independently, provided there is a `Data` folder in the same directory. The `Data` folder should contain the `blockagedetection_dataset` as sourced from [Vandaele et al., 2023](https://researchdata.reading.ac.uk/498/).
